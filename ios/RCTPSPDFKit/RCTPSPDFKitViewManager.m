@@ -36,7 +36,12 @@ RCT_CUSTOM_VIEW_PROPERTY(document, pdfController.document, RCTPSPDFKitView) {
       view.pdfController.document.defaultAnnotationUsername = view.annotationAuthorName;
     }
 
+    // Customize the toolbar by only showing the annotation and the Open In button items.
+    // See https://pspdfkit.com/guides/ios/current/customizing-the-interface/customizing-the-toolbar/ for more details.
+    [view.pdfController.navigationItem setRightBarButtonItems:@[view.pdfController.annotationButtonItem, view.pdfController.openInButtonItem] animated:NO];
+
     // Update the configuration to use the custom annotation tool bar.
+    // For more details, see `PSCCustomizeAnnotationToolbarExample.m` from PSPDFCatalog and our documentation here: https://pspdfkit.com/guides/ios/current/customizing-the-interface/customize-the-annotation-toolbar/
     [view.pdfController updateConfigurationWithBuilder:^(PSPDFConfigurationBuilder * _Nonnull builder) {
       [builder overrideClass:PSPDFAnnotationToolbar.class withClass:CustomButtonAnnotationToolbar.class];
     }];
