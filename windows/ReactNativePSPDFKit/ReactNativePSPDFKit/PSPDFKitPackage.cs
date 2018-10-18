@@ -35,7 +35,8 @@ namespace ReactNativePSPDFKit
         {
             return new List<INativeModule>
             {
-                new PSPDFKitModule(reactContext, _pspdfkitViewManger),
+                new PSPDFKitModule(reactContext, _pspdfkitViewManger.PdfViewPage),
+                new LibraryModule(reactContext, _pspdfkitViewManger.PdfViewPage.Pdfview.License)
             };
         }
 
