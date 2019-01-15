@@ -1,4 +1,6 @@
-## React Native wrapper for PSPDFKit for iOS, Android and Windows UWP.
+## React Native wrapper for PSPDFKit for iOS, Android & Windows. (PDF SDK for React Native)
+
+![PDF SDK for React Native](https://github.com/PSPDFKit/react-native/blob/master/article-header.png?raw=true)
 
 This wrapper requires a valid license of PSPDFKit. Licenses are per platform. You can request [a trial license here](https://pspdfkit.com/try/).
 
@@ -22,8 +24,8 @@ The [PSPDFKit SDK](https://pspdfkit.com/) is a framework that allows you to view
 
 #### Requirements
 
-- Xcode 10
-- PSPDFKit 8.0 for iOS or later
+- Xcode 10.1
+- PSPDFKit 8.1.3 for iOS or later
 - react-native >= 0.55.4
 
 #### Getting Started
@@ -230,6 +232,7 @@ Example - Native UI Component:
 - Copy `PSPDFKit.framework` and `PSPDFKitUI.framework` into the `PSPDFKit` directory.
 - Install dependencies: `yarn install` in `samples/Catalog` directory. (Because of a [bug](https://github.com/yarnpkg/yarn/issues/2165) you may need to clean `yarn`'s cache with `yarn cache clean` before.)
 - Run the app with `react-native-cli`: `react-native run-ios`
+- If you get an error about `config.h` not being found check out [this blog post](https://tuntunir.blogspot.com/2018/02/react-native-fatal-error-configh-file.html) for information on how to fix it.
 
 #### Configuration Mapping
 
@@ -239,6 +242,18 @@ Annotations are mapped based on their type name. This is case sensitive. For exa
 
 ```javascript
 editableAnnotationTypes: ["Ink", "Highlight"];
+```
+
+#### Menu Item Mapping
+
+The PSPDFKit React Native iOS Wrapper allows you to specify a custom grouping for the annotation creation toolbar. Please refer to [`RCTConvert+PSPDFAnnotationToolbarConfiguration.m`](./ios/RCTPSPDFKit/Converters/RCTConvert+PSPDFAnnotationToolbarConfiguration.m#L47) for the complete list of menu items. To set them just specify the `menuItemGrouping` prop on the `PSPDFKitView`. The format used is as follows:
+
+```
+[
+  menuItem,
+  { key: menuItem, items: [subItem, subItem]},
+  ...
+]
 ```
 
 ### Android
@@ -520,6 +535,18 @@ Just like on iOS we also support integrating PSPDFKit directly into the react-na
 - Because of [issues](https://github.com/facebook/react-native/issues/17968) in react-native our `PdfView` needs to call `layout` and `dispatchOnGlobalLayout` on every frame, this might negatively affect your apps performance or even cause it to misbehave.
 - `PSPDFKitView` doesn't yet support all the features (outline, bookmarks, thubmnail grid, view settings) using `PSPDFKit.present` provides.
 
+##### Menu Item Mapping
+
+The PSPDFKit React Native Android Wrapper allows you to specify a custom grouping for the annotation creation toolbar. Please refer to [`ReactGroupingRule.java`](https://github.com/PSPDFKit/react-native/blob/master/android/src/main/java/com/pspdfkit/react/menu/ReactGroupingRule.java) for the complete list of menu items. To set them just specify the `menuItemGrouping` prop on the `PSPDFKitView`. The format used is as follows:
+
+```
+[
+  menuItem,
+  { key: menuItem, items: [subItem, subItem]},
+  ...
+]
+```
+
 #### Update
 
 Upgrading yarn's lock file is required in order to update react-native-pspdfkit module in a project that has been already setup following the steps in [Getting Started](#getting-started-1) section.  
@@ -624,33 +651,31 @@ Let's create a simple app that integrates PSPDFKit and uses the react-native-psp
 2. Make sure `react-native-cli` is installed: `yarn global add react-native-cli`.
 3. Install Windows Tool for React Native: `yarn add global windows-build-tools`.
 4. Open `x64 Native Tools Command Prompt for VS 2017` program.
-5. Create the app with `react-native init --version=0.53.0 YourApp` in a location of your choice.
+5. Create the app with `react-native init --version=0.55.4 YourApp` in a location of your choice.
 6. Step into your newly created app folder: `cd YourApp`.
 7. Install the Windows helper plugin: `yarn add --dev rnpm-plugin-windows`.
 8. Install `react-native-pspdfkit` from GitHub: `yarn add github:PSPDFKit/react-native`.
-9. Install all modules for Windows: `yarn install`. (Because of a [bug](https://github.com/yarnpkg/yarn/issues/2165) you may need to clean `yarn`'s cache with `yarn cache clean` before.)
-10. Link module `react-native-pspdfkit`: `react-native link react-native-pspdfkit`. (Note: On windows yarn does not link correctly, therefore any chages made in the ReactNativePSPDFKit project will have to be manually copied to the `windows` folder at the base of the repo in order to commit changes.)
+9. Install `react-native-fs` from GitHub: `yarn add react-native-fs`.
+10. Install all modules for Windows: `yarn install`. (Because of a [bug](https://github.com/yarnpkg/yarn/issues/2165) you may need to clean `yarn`'s cache with `yarn cache clean` before.)
 11. Initialize the windows project: `react-native windows`.
-12. Open the Visual Studio solution in `react-native\YourApp\windows`.
-13. Accept and install any required extensions when prompted.
-14. If the settings window opens, click on `Developer` and select `yes`.
-15. Add `react-native-pspdfkit` to your soloution: Right click on the solution -> Add -> Existing Project.
-    Navigate to `node_modules/react-native-pspdfkit/windows/ReactNativePSPDFKit/ReactNativePSPDFKit/` and select the `ReactNativePSPDFKit.csproj`
-    ![Deployment Target](screenshots/windowsAddExistingProject.PNG)
-16. Mark `react-native-pspdfkit`, `PSPDFKit SDK` and `Visual C++ Runtime` as dependancies for `YourApp`:
+12. Link module `react-native-pspdfkit`: `react-native link react-native-pspdfkit`.
+13. Open the Visual Studio solution in `react-native\YourApp\windows`.
+14. Accept and install any required extensions when prompted.
+15. If the settings window opens, click on `Developer` and select `yes`.
+16. Mark `PSPDFKit SDK` and `Visual C++ Runtime` as dependencies for `YourApp`:
     Right click on `YourApp` -> Add -> Refererece... Click on Projects and tick `ReactNativePSPDFKit`. Click on Universal Windows -> Extensions and tick `PSPDFKit for UWP` and `Visual C++ 2015 Runtime for Universal Windows Platform Apps` then click ok.
     ![Deployment Target](screenshots/windowsAddReferences.PNG)
     ![Deployment Target](screenshots/windowsSelectRNPSPDFKit.PNG)
-    ![Deployment Target](screenshots/windowsSelectPSPDFKit+UWP.PNG)
+    ![Deployment Target]
 17. Add an application resource to your `Appl.xaml` to reference your License key.
 
 ```diff
-<Application
-	x:Class="Catalog.App"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:local="using:Catalog"
-	RequestedTheme="Light">
+<rn:ReactApplication
+    x:Class="Catalog.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:rn="using:ReactNative"
+    RequestedTheme="Light">
 
 +	<Application.Resources>
 +		<ResourceDictionary>
@@ -660,10 +685,10 @@ Let's create a simple app that integrates PSPDFKit and uses the react-native-psp
 +		</ResourceDictionary>
 +	</Application.Resources>
 
-</Application>
+</rn:ReactApplication>
 ```
 
-18. Create a new file resouce called `License.xaml` with your PSPDFKit license key at the top level of the
+18. Create a new file resource called `License.xaml` with your PSPDFKit license key at the top level of the
     project. (Replace `ENTER LICENSE KEY HERE` with your key)
 
 ```xaml
@@ -676,22 +701,11 @@ Let's create a simple app that integrates PSPDFKit and uses the react-native-psp
 </ResourceDictionary>
 ```
 
-19. Add `react-native-pspdfkit` to `YourApp` package list: open
-    `MainReactNativeHost.cs` in `YourApp` project and add the following line.
-
-```diff
-protected override List<IReactPackage> Packages => new List<IReactPackage>
-{
-    new MainReactPackage(),
-+   new ReactNativePSPDFKit.PSPDFKitPackage()
-};
-```
-
-20. Change the target SDK of YourApp to >= 10.0.16299 : Right Click on YourApp -> Properties. Go to
-    Application and change Target Version to >= 10.0.16299.
+19. Change the target SDK of YourApp to >= 10.0.16299 and Min Version to >= 10.0.15063 : Right Click on YourApp -> Properties. Go to
+    Application and change Target Version to >= 10.0.16299 and change Min Version to >= 10.0.15063.
     ![Development Target](screenshots/changeVersionSDK.png)
-21. Save Changes: File -> Save All
-22. Add the `PSPDFKitView` and `PSPDFKit` module into your `App.windows.js` file, and add a open button to allow the user
+20. Save Changes: File -> Save All
+21. Add the `PSPDFKitView` and `PSPDFKit` module into your `App.windows.js` file, and add a open button to allow the user
     to navigate the file system.
 
 ```javascript
@@ -755,35 +769,20 @@ var styles = StyleSheet.create({
 });
 ```
 
-23. Now run the application on the command line: `react-native run-windows`.
-24. Press Yes when PowerShell wants to run.
-25. Type 'y' when asking if you want to install the certificate.
+22. Now run the application on the command line: `react-native run-windows`.
+23. Press Yes when PowerShell wants to run.
+24. Type 'y' when asking if you want to install the certificate.
 
 #### Running Catalog Project
 
 1. Clone the repository. `git clone https://github.com/PSPDFKit/react-native.git`.
 2. From the command promt `cd react-native\samples\Catalog`.
 3. Make sure `react-native-cli` is installed: `yarn global add react-native-cli`.
-4. Edit `package.json` to change the version of `react-native` to `0.53.0` and refernce the react-native
-   pspdfkit repo online.
-
-```diff
-"dependencies": {
-"react": "16.3.1",
--"react-native": "0.55.4",
-+"react-native": "0.53.0",
-"react-native-fs": "2.10.14",
-"react-native-pspdfkit": "file:../../",
-"react-native-windows": "0.53.0",
-"react-navigation": "^1.0.3"
-}
-```
-
-5. run `yarn install`. (Because of a [bug](https://github.com/yarnpkg/yarn/issues/2165) you may need to clean `yarn`'s cache with `yarn cache clean` before.)
-6. Open the UWP catalog solution in `react-native\samples\Catalog\windows`.
-7. Accept and install any required extensions when prompted.
-8. If the settings windows opens, click on `Developer` and selected `yes`.
-9. Create a new file resouce called `License.xaml` with your PSPDFKit license key at the top level of the project. (Replace `ENTER LICENSE KEY HERE` with your key)
+4. run `yarn install`. (Because of a [bug](https://github.com/yarnpkg/yarn/issues/2165) you may need to clean `yarn`'s cache with `yarn cache clean` before.)
+5. Open the UWP catalog solution in `react-native\samples\Catalog\windows`.
+6. Accept and install any required extensions when prompted.
+7. If the settings windows opens, click on `Developer` and selected `yes`.
+8. Create a new file resouce called `License.xaml` with your PSPDFKit license key at the top level of the project. (Replace `ENTER LICENSE KEY HERE` with your key)
 
 ```xaml
 	<ResourceDictionary
@@ -795,8 +794,9 @@ var styles = StyleSheet.create({
 	</ResourceDictionary>
 ```
 
-10. From the command prompt run `react-native run-windows`.
-11. Enter `y` to accept the certificate when prompted and allow socket access for reactive when prompted.
+9. From the command prompt run `react-native run-windows`.
+10. Enter `y` to accept the certificate when prompted and allow socket access for reactive when prompted.
+(Note: On windows yarn does not link correctly, therefore any changes made in the ReactNativePSPDFKit project will have to be manually copied to the `windows` folder at the base of the repo in order to commit changes.)
 
 #### API
 

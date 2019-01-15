@@ -11,6 +11,7 @@
 #import "RCTConvert+PSPDFAnnotation.h"
 #import "RCTConvert+PSPDFConfiguration.h"
 #import "RCTConvert+PSPDFDocument.h"
+#import "RCTConvert+PSPDFAnnotationToolbarConfiguration.h"
 #import "RCTPSPDFKitView.h"
 #import <React/RCTUIManager.h>
 
@@ -51,6 +52,13 @@ RCT_CUSTOM_VIEW_PROPERTY(annotationAuthorName, pdfController.document.defaultAnn
   if (json) {
     view.pdfController.document.defaultAnnotationUsername = json;
     view.annotationAuthorName = json;
+  }
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(menuItemGrouping, PSPDFAnnotationToolbarConfiguration, RCTPSPDFKitView) {
+  if (json) {
+    PSPDFAnnotationToolbarConfiguration *configuration = [RCTConvert PSPDFAnnotationToolbarConfiguration:json];
+    view.pdfController.annotationToolbarController.annotationToolbar.configurations = @[configuration];
   }
 }
 
@@ -143,7 +151,7 @@ RCT_EXPORT_METHOD(addAnnotation:(id)jsonAnnotation reactTag:(nonnull NSNumber *)
 RCT_EXPORT_METHOD(removeAnnotation:(id)jsonAnnotation reactTag:(nonnull NSNumber *)reactTag resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
   dispatch_async(dispatch_get_main_queue(), ^{
     RCTPSPDFKitView *component = (RCTPSPDFKitView *)[self.bridge.uiManager viewForReactTag:reactTag];
-    BOOL success = [component removeAnnotation:jsonAnnotation];
+    BOOL success = [component removeAnnotationWithUUID:jsonAnnotation[@"uuid"]];
     if (success) {
       resolve(@(success));
     } else {
