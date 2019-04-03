@@ -1,5 +1,5 @@
 //
-//  Copyright © 2018 PSPDFKit GmbH. All rights reserved.
+//  Copyright © 2018-2019 PSPDFKit GmbH. All rights reserved.
 //
 //  THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY INTERNATIONAL COPYRIGHT LAW
 //  AND MAY NOT BE RESOLD OR REDISTRIBUTED. USAGE IS BOUND TO THE PSPDFKIT LICENSE AGREEMENT.
@@ -350,6 +350,7 @@
 
 - (void)onStateChangedForPDFViewController:(PSPDFViewController *)pdfController pageView:(PSPDFPageView *)pageView pageAtIndex:(NSInteger)pageIndex {
   if (self.onStateChanged) {
+    BOOL isDocumentLoaded = [pdfController.document isValid];
     PSPDFPageCount pageCount = pdfController.document.pageCount;
     BOOL isAnnotationToolBarVisible = [pdfController.annotationToolbarController isToolbarVisible];
     BOOL hasSelectedAnnotations = pageView.selectedAnnotations.count > 0;
@@ -362,7 +363,8 @@
       }
     }
     
-    self.onStateChanged(@{@"currentPageIndex" : @(pageIndex),
+    self.onStateChanged(@{@"documentLoaded" : @(isDocumentLoaded),
+                          @"currentPageIndex" : @(pageIndex),
                           @"pageCount" : @(pageCount),
                           @"annotationCreationActive" : @(isAnnotationToolBarVisible),
                           @"annotationEditingActive" : @(hasSelectedAnnotations),

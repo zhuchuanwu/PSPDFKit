@@ -3,7 +3,7 @@
  *
  *   PSPDFKit
  *
- *   Copyright © 2017-2018 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2017-2019 PSPDFKit GmbH. All rights reserved.
  *
  *   THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY INTERNATIONAL COPYRIGHT LAW
  *   AND MAY NOT BE RESOLD OR REDISTRIBUTED. USAGE IS BOUND TO THE PSPDFKIT LICENSE AGREEMENT.
@@ -57,6 +57,7 @@ public class ConfigurationAdapter {
     private static final String SHOW_SHARE_ACTION = "showShareAction";
     private static final String SHOW_PRINT_ACTION = "showPrintAction";
     private static final String SHOW_DOCUMENT_INFO_VIEW = "showDocumentInfoView";
+    private static final String SHOW_DOCUMENT_TITLE_OVERLAY = "documentLabelEnabled";
 
 
     private final PdfActivityConfiguration.Builder configuration;
@@ -64,12 +65,9 @@ public class ConfigurationAdapter {
 
     public ConfigurationAdapter(@NonNull Context context, ReadableMap configuration) {
         ReadableMapKeySetIterator iterator = configuration.keySetIterator();
-        boolean emptyConfiguration = iterator.hasNextKey() ? false : true;
-        if (emptyConfiguration) {
-            this.configuration = getDefaultConfiguration(context);
-        } else {
-            this.configuration = new PdfActivityConfiguration.Builder(context);
-
+        boolean hasConfiguration = iterator.hasNextKey();
+        this.configuration = new PdfActivityConfiguration.Builder(context);
+        if (hasConfiguration) {
             if (configuration.hasKey(PAGE_SCROLL_DIRECTION)) {
                 configurePageScrollDirection(configuration.getString(PAGE_SCROLL_DIRECTION));
             }
@@ -132,6 +130,9 @@ public class ConfigurationAdapter {
             }
             if (configuration.hasKey(SHOW_DOCUMENT_INFO_VIEW)) {
                 configureDocumentInfoView(configuration.getBoolean(SHOW_DOCUMENT_INFO_VIEW));
+            }
+            if (configuration.hasKey(SHOW_DOCUMENT_TITLE_OVERLAY)) {
+                configureShowDocumentTitleOverlay(configuration.getBoolean(SHOW_DOCUMENT_TITLE_OVERLAY));
             }
         }
     }
@@ -285,29 +286,15 @@ public class ConfigurationAdapter {
         }
     }
 
-    public PdfActivityConfiguration build() {
-        return configuration.build();
+    private void configureShowDocumentTitleOverlay(boolean showDocumentTitleOverlay) {
+        if (showDocumentTitleOverlay) {
+            configuration.showDocumentTitleOverlay();
+        } else {
+            configuration.hideDocumentTitleOverlay();
+        }
     }
 
-    public static PdfActivityConfiguration.Builder getDefaultConfiguration(Context context) {
-
-        final PageScrollDirection pageScrollDirection = PageScrollDirection.HORIZONTAL;
-        final PageScrollMode pageScrollMode = PageScrollMode.PER_PAGE;
-        final PageFitMode pageFitMode = PageFitMode.FIT_TO_WIDTH;
-        final int searchType = PdfActivityConfiguration.SEARCH_INLINE;
-        final UserInterfaceViewMode userInterfaceViewMode = UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_AUTOMATIC;
-        final ThumbnailBarMode thumbnailBarMode = ThumbnailBarMode.THUMBNAIL_BAR_MODE_DEFAULT;
-        int startPage = 0;
-
-        PdfActivityConfiguration.Builder configuration = new PdfActivityConfiguration.Builder(context)
-                .scrollDirection(pageScrollDirection)
-                .scrollMode(pageScrollMode)
-                .fitMode(pageFitMode)
-                .setUserInterfaceViewMode(userInterfaceViewMode)
-                .setSearchType(searchType)
-                .setThumbnailBarMode(thumbnailBarMode)
-                .page(startPage);
-
-        return configuration;
+    public PdfActivityConfiguration build() {
+        return configuration.build();
     }
 }
