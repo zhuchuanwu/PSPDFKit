@@ -202,6 +202,10 @@
   }
   
   PSPDFDocument *document = self.pdfController.document;
+  if (!document.isValid) {
+    NSLog(@"Document is invalid.");
+    return NO;
+  }
   PSPDFDocumentProvider *documentProvider = document.documentProviders.firstObject;
 
   BOOL success = NO;
@@ -219,18 +223,22 @@
 
 - (BOOL)removeAnnotationWithUUID:(NSString *)annotationUUID {
   PSPDFDocument *document = self.pdfController.document;
-
+  if (!document.isValid) {
+    NSLog(@"Document is invalid.");
+    return NO;
+  }
+  
   BOOL success = NO;
 
   NSArray<PSPDFAnnotation *> *allAnnotations = [[document allAnnotationsOfType:PSPDFAnnotationTypeAll].allValues valueForKeyPath:@"@unionOfArrays.self"];
-    for (PSPDFAnnotation *annotation in allAnnotations) {
-      // Remove the annotation if the name matches.
-      if ([annotation.uuid isEqualToString:annotationUUID]) {
-        success = [document removeAnnotations:@[annotation] options:nil];
-        break;
-      }
+  for (PSPDFAnnotation *annotation in allAnnotations) {
+    // Remove the annotation if the name matches.
+    if ([annotation.uuid isEqualToString:annotationUUID]) {
+      success = [document removeAnnotations:@[annotation] options:nil];
+      break;
     }
-
+  }
+  
   if (!success) {
     NSLog(@"Failed to remove annotation.");
   }
@@ -257,12 +265,18 @@
   
   PSPDFDataContainerProvider *dataContainerProvider = [[PSPDFDataContainerProvider alloc] initWithData:data];
   PSPDFDocument *document = self.pdfController.document;
+  if (!document.isValid) {
+    NSLog(@"Document is invalid.");
+    return NO;
+  }
+  
   PSPDFDocumentProvider *documentProvider = document.documentProviders.firstObject;
-  BOOL success = [document applyInstantJSONFromDataProvider:dataContainerProvider toDocumentProvider:documentProvider error:NULL];
+  BOOL success = [document applyInstantJSONFromDataProvider:dataContainerProvider toDocumentProvider:documentProvider lenient:NO error:NULL];
   if (!success) {
     NSLog(@"Failed to add annotations.");
   }
 
+  [self.pdfController reloadPageAtIndex:self.pdfController.pageIndex animated:NO];
   return success;
 }
 
@@ -275,6 +289,11 @@
   }
 
   PSPDFDocument *document = self.pdfController.document;
+  if (!document.isValid) {
+    NSLog(@"Document is invalid.");
+    return nil;
+  }
+  
   for (PSPDFFormElement *formElement in document.formParser.forms) {
     if ([formElement.fullyQualifiedFieldName isEqualToString:fullyQualifiedName]) {
       id formFieldValue = formElement.value;
@@ -292,6 +311,11 @@
   }
 
   PSPDFDocument *document = self.pdfController.document;
+  if (!document.isValid) {
+    NSLog(@"Document is invalid.");
+    return;
+  }
+  
   for (PSPDFFormElement *formElement in document.formParser.forms) {
     if ([formElement.fullyQualifiedFieldName isEqualToString:fullyQualifiedName]) {
       if ([formElement isKindOfClass:PSPDFButtonFormElement.class]) {
