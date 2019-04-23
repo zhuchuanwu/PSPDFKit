@@ -11,6 +11,8 @@
 #import <React/RCTUtils.h>
 #import "RCTConvert+PSPDFAnnotation.h"
 
+#define VALIDATE_DOCUMENT(document, ...) { if (!document.isValid) { NSLog(@"Document is invalid."); return __VA_ARGS__; }}
+
 // Custom annotation toolbar subclass that adds a "Clear" button that removes all visible annotations.
 @interface CustomButtonAnnotationToolbar : PSPDFAnnotationToolbar
 
@@ -185,7 +187,10 @@
 #pragma mark - Instant JSON
 
 - (NSDictionary<NSString *, NSArray<NSDictionary *> *> *)getAnnotations:(PSPDFPageIndex)pageIndex type:(PSPDFAnnotationType)type {
-  NSArray <PSPDFAnnotation *> *annotations = [self.pdfController.document annotationsForPageAtIndex:pageIndex type:type];
+  PSPDFDocument *document = self.pdfController.document;
+  VALIDATE_DOCUMENT(document, nil);
+
+  NSArray <PSPDFAnnotation *> *annotations = [document annotationsForPageAtIndex:pageIndex type:type];
   NSArray <NSDictionary *> *annotationsJSON = [RCTConvert instantJSONFromAnnotations:annotations];
   return @{@"annotations" : annotationsJSON};
 }
@@ -202,10 +207,7 @@
   }
   
   PSPDFDocument *document = self.pdfController.document;
-  if (!document.isValid) {
-    NSLog(@"Document is invalid.");
-    return NO;
-  }
+  VALIDATE_DOCUMENT(document, NO)
   PSPDFDocumentProvider *documentProvider = document.documentProviders.firstObject;
 
   BOOL success = NO;
@@ -223,16 +225,12 @@
 
 - (BOOL)removeAnnotationWithUUID:(NSString *)annotationUUID {
   PSPDFDocument *document = self.pdfController.document;
-  if (!document.isValid) {
-    NSLog(@"Document is invalid.");
-    return NO;
-  }
-  
+  VALIDATE_DOCUMENT(document, NO)
   BOOL success = NO;
 
   NSArray<PSPDFAnnotation *> *allAnnotations = [[document allAnnotationsOfType:PSPDFAnnotationTypeAll].allValues valueForKeyPath:@"@unionOfArrays.self"];
   for (PSPDFAnnotation *annotation in allAnnotations) {
-    // Remove the annotation if the name matches.
+    // Remove the annotation if the uuids match.
     if ([annotation.uuid isEqualToString:annotationUUID]) {
       success = [document removeAnnotations:@[annotation] options:nil];
       break;
@@ -246,8 +244,11 @@
 }
 
 - (NSDictionary<NSString *, NSArray<NSDictionary *> *> *)getAllUnsavedAnnotations {
-  PSPDFDocumentProvider *documentProvider = self.pdfController.document.documentProviders.firstObject;
-  NSData *data = [self.pdfController.document generateInstantJSONFromDocumentProvider:documentProvider error:NULL];
+  PSPDFDocument *document = self.pdfController.document;
+  VALIDATE_DOCUMENT(document, nil)
+
+  PSPDFDocumentProvider *documentProvider = document.documentProviders.firstObject;
+  NSData *data = [document generateInstantJSONFromDocumentProvider:documentProvider error:NULL];
   NSDictionary *annotationsJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:NULL];
   return annotationsJSON;
 }
@@ -265,11 +266,7 @@
   
   PSPDFDataContainerProvider *dataContainerProvider = [[PSPDFDataContainerProvider alloc] initWithData:data];
   PSPDFDocument *document = self.pdfController.document;
-  if (!document.isValid) {
-    NSLog(@"Document is invalid.");
-    return NO;
-  }
-  
+  VALIDATE_DOCUMENT(document, NO)
   PSPDFDocumentProvider *documentProvider = document.documentProviders.firstObject;
   BOOL success = [document applyInstantJSONFromDataProvider:dataContainerProvider toDocumentProvider:documentProvider lenient:NO error:NULL];
   if (!success) {
@@ -289,10 +286,7 @@
   }
 
   PSPDFDocument *document = self.pdfController.document;
-  if (!document.isValid) {
-    NSLog(@"Document is invalid.");
-    return nil;
-  }
+  VALIDATE_DOCUMENT(document, nil)
   
   for (PSPDFFormElement *formElement in document.formParser.forms) {
     if ([formElement.fullyQualifiedFieldName isEqualToString:fullyQualifiedName]) {
@@ -311,10 +305,7 @@
   }
 
   PSPDFDocument *document = self.pdfController.document;
-  if (!document.isValid) {
-    NSLog(@"Document is invalid.");
-    return;
-  }
+  VALIDATE_DOCUMENT(document)
   
   for (PSPDFFormElement *formElement in document.formParser.forms) {
     if ([formElement.fullyQualifiedFieldName isEqualToString:fullyQualifiedName]) {
