@@ -1,8 +1,10 @@
-## React Native wrapper for PSPDFKit for iOS, Android & Windows. (PDF SDK for React Native)
+## React Native wrapper for PSPDFKit for iOS, Android & Windows UWP. (PDF SDK for React Native)
 
 ![PDF SDK for React Native](https://github.com/PSPDFKit/react-native/blob/master/article-header.png?raw=true)
 
 This wrapper requires a valid license of PSPDFKit. Licenses are per platform. You can request [a trial license here](https://pspdfkit.com/try/).
+
+This wrapper exposes the most often used APIs from PSPDFKit. Many of our partners end up forking this wrapper and adding some custom code to achieve even greater integration with their products, using native code.
 
 #### Announcements
 
@@ -13,6 +15,7 @@ This wrapper requires a valid license of PSPDFKit. Licenses are per platform. Yo
   Native](https://pspdfkit.com/blog/2018/introducing-pspdfkit-windows/#react-native-for-windows-support) ([See Windows UWP](https://github.com/PSPDFKit/react-native#windows-uwp))
 - [How to Extend React Native APIs](https://pspdfkit.com/blog/2018/how-to-extend-react-native-api/)
 - [Advanced Techniques for React Native UI Components](https://pspdfkit.com/blog/2018/advanced-techniques-for-react-native-ui-components/)
+- [How to Extend React Native APIs for Windows](https://pspdfkit.com/blog/2019/how-to-extend-react-native-apis-for-windows/)
 
 #### PSPDFKit
 
@@ -171,7 +174,7 @@ Using this approach, you have more flexibility over how a document is presented 
 The layout is completely flexible, and can be adjust with flexbox.
 Note that you still need to set your license key with the Native Module.
 
-For all the `props` that you can pass to `PSPDFKitView`, have a look at the [source documentation](./js/index.js)
+For all the `props` that you can pass to `PSPDFKitView`, have a look at the [source documentation](./index.js).
 
 This is how you would show a PDF as a React component:
 
@@ -792,6 +795,24 @@ Opens a document in the available `<PSPDFKitView>`. If the element is not displa
 ```javascript
 PSPDFKit.Present("ms-appx:///Assets/pdf/Business Report.pdf");
 ```
+
+#### Theming support
+
+It is possible to theme/customize the PdfView with the use of a CSS file. To do this simple pass a `Uri` within the web context to the instantiated [`PSPDFKitPackage`](https://github.com/PSPDFKit/react-native/blob/master/windows/ReactNativePSPDFKit/ReactNativePSPDFKit/PSPDFKitPackage.cs#L32).
+
+To see this in action, make the following changes in [`samples/Catalog/windows/Catalog/MainReactNativeHost.cs`](https://github.com/PSPDFKit/react-native/blob/master/samples/Catalog/windows/Catalog/MainReactNativeHost.cs) and run the catalog the catalog.
+```diff
+protected override List<IReactPackage> Packages => new List<IReactPackage>
+{
+    new MainReactPackage(),
+-   new ReactNativePSPDFKit.PSPDFKitPackage(),
++   new ReactNativePSPDFKit.PSPDFKitPackage(new Uri("ms-appx-web:///Assets/css/greenTheme.css")),
+    new RNFSPackage()
+};
+```
+The code above will pass an asset held in the `Catalog` project's `Assets/css` to the web context of PSPDFKit for Windows. The file can then be used to theme the view.
+
+For more information on CSS Customization in PSPDFKit for Windows please refer to [CSS Customization](https://pspdfkit.com/guides/windows/current/customizing-the-interface/css-customization/)
 
 ## License
 

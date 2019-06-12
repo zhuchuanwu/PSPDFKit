@@ -39,6 +39,8 @@ namespace ReactNativePSPDFKit
                 // This is a work aronud to ensure that if the user navigates away from
                 // the Page and then back, a document will still be shown.
                 _fileToOpen = null;
+
+                args.Complete();
             };
 
             PDFView.OnDocumentOpened += (pdfView, document) =>
@@ -159,6 +161,17 @@ namespace ReactNativePSPDFKit
             );
         }
 
+        internal async Task RemoveAnnotation(int requestId, string annotationJsonString)
+        {
+            await RunOperationAndFireEvent(requestId,
+                async () =>
+                {
+                    var annotation = Factory.FromJson(JsonObject.Parse(annotationJsonString));
+                    await Pdfview.Document.DeleteAnnotationAsync(annotation.Id);
+                }
+            );
+        }
+
         internal async Task SetInteractionMode(int requestId, InteractionMode interactionMode)
         {
             await RunOperationAndFireEvent(requestId,
@@ -205,37 +218,28 @@ namespace ReactNativePSPDFKit
             _pdfViewInitialised = true;
         }
 
-        private void DocumentOnAnnotationsCreated(object sender, IList<IAnnotation> annotationList)
+        private void DocumentOnAnnotationsCreated(object sender, IList<IAnnotation> annotations)
         {
-            foreach (var annotation in annotationList)
-            {
-                this.GetReactContext().GetNativeModule<UIManagerModule>().EventDispatcher.DispatchEvent(
-                    new PdfViewAnnotationChangedEvent(this.GetTag(),
-                        PdfViewAnnotationChangedEvent.EVENT_TYPE_ADDED, annotation)
-                );
-            }
+            this.GetReactContext().GetNativeModule<UIManagerModule>().EventDispatcher.DispatchEvent(
+                new PdfViewAnnotationChangedEvent(this.GetTag(),
+                    PdfViewAnnotationChangedEvent.EVENT_TYPE_ADDED, annotations)
+            );
         }
 
-        private void DocumentOnAnnotationsUpdated(object sender, IList<IAnnotation> annotationList)
+        private void DocumentOnAnnotationsUpdated(object sender, IList<IAnnotation> annotations)
         {
-            foreach (var annotation in annotationList)
-            {
-                this.GetReactContext().GetNativeModule<UIManagerModule>().EventDispatcher.DispatchEvent(
-                    new PdfViewAnnotationChangedEvent(this.GetTag(),
-                        PdfViewAnnotationChangedEvent.EVENT_TYPE_CHANGED, annotation)
-                );
-            }
+            this.GetReactContext().GetNativeModule<UIManagerModule>().EventDispatcher.DispatchEvent(
+                new PdfViewAnnotationChangedEvent(this.GetTag(),
+                    PdfViewAnnotationChangedEvent.EVENT_TYPE_CHANGED, annotations)
+            );
         }
 
-        private void DocumentOnAnnotationsDeleted(object sender, IList<IAnnotation> annotationList)
+        private void DocumentOnAnnotationsDeleted(object sender, IList<IAnnotation> annotations)
         {
-            foreach (var annotation in annotationList)
-            {
-                this.GetReactContext().GetNativeModule<UIManagerModule>().EventDispatcher.DispatchEvent(
-                    new PdfViewAnnotationChangedEvent(this.GetTag(),
-                        PdfViewAnnotationChangedEvent.EVENT_TYPE_REMOVED, annotation)
-                );
-            }
+            this.GetReactContext().GetNativeModule<UIManagerModule>().EventDispatcher.DispatchEvent(
+                new PdfViewAnnotationChangedEvent(this.GetTag(),
+                    PdfViewAnnotationChangedEvent.EVENT_TYPE_REMOVED, annotations)
+            );
         }
     }
 }
