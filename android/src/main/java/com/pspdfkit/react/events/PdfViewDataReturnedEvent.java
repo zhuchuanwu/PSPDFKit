@@ -1,7 +1,7 @@
 package com.pspdfkit.react.events;
 
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
@@ -43,6 +43,16 @@ public class PdfViewDataReturnedEvent extends Event<PdfViewDataReturnedEvent> {
         } catch (JSONException e) {
             map.put("error", e.getMessage());
         }
+
+        payload = Arguments.makeNativeMap(map);
+    }
+
+    public PdfViewDataReturnedEvent(@IdRes int viewId, int requestId, boolean result) {
+        super(viewId);
+        this.requestId = requestId;
+        Map<String, Object> map = new HashMap<>();
+        map.put("requestId", requestId);
+        map.put("result", result);
 
         payload = Arguments.makeNativeMap(map);
     }

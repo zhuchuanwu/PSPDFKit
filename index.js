@@ -85,7 +85,7 @@ class PSPDFKitView extends React.Component {
   _onDataReturned = event => {
     let { requestId, result, error } = event.nativeEvent;
     let promise = this._requestMap[requestId];
-    if (result) {
+    if (result != undefined) {
       promise.resolve(result);
     } else {
       promise.reject(error);
@@ -186,14 +186,26 @@ class PSPDFKitView extends React.Component {
    * Adds a new annotation to the current document.
    *
    * @param annotation InstantJson of the annotation to add.
+   *
+   * Returns a promise resolving to true if the annotation was added. Otherwise, returns false if an error has occurred.
    */
   addAnnotation = function(annotation) {
     if (Platform.OS === "android") {
+      let requestId = this._nextRequestId++;
+      let requestMap = this._requestMap;
+
+      // We create a promise here that will be resolved once onDataReturned is called.
+      let promise = new Promise(function(resolve, reject) {
+        requestMap[requestId] = { resolve: resolve, reject: reject };
+      });
+
       UIManager.dispatchViewManagerCommand(
         findNodeHandle(this.refs.pdfView),
         this._getViewManagerConfig("RCTPSPDFKitView").Commands.addAnnotation,
-        [annotation]
+        [requestId, annotation]
       );
+
+      return promise;
     } else if (Platform.OS === "ios") {
       return NativeModules.PSPDFKitViewManager.addAnnotation(
         annotation,
@@ -206,14 +218,26 @@ class PSPDFKitView extends React.Component {
    * Removes an existing annotation from the current document.
    *
    * @param annotation InstantJson of the annotation to remove.
+   *
+   * Returns a promise resolving to true if the annotation was removed. Otherwise, returns false if the annotation couldn't be found.
    */
   removeAnnotation = function(annotation) {
     if (Platform.OS === "android") {
+      let requestId = this._nextRequestId++;
+      let requestMap = this._requestMap;
+
+      // We create a promise here that will be resolved once onDataReturned is called.
+      let promise = new Promise(function(resolve, reject) {
+        requestMap[requestId] = { resolve: resolve, reject: reject };
+      });
+
       UIManager.dispatchViewManagerCommand(
         findNodeHandle(this.refs.pdfView),
         this._getViewManagerConfig("RCTPSPDFKitView").Commands.removeAnnotation,
-        [annotation]
+        [requestId, annotation]
       );
+
+      return promise;
     } else if (Platform.OS === "ios") {
       return NativeModules.PSPDFKitViewManager.removeAnnotation(
         annotation,
@@ -253,17 +277,63 @@ class PSPDFKitView extends React.Component {
   };
 
   /**
+   * Gets all annotations of the given type.
+   *
+   * @param type The type of annotations to get (See here for types https://pspdfkit.com/guides/server/current/api/json-format/) or null to get all annotations.
+   *
+   * Returns a promise resolving an array with the following structure:
+   * {'annotations' : [instantJson]}
+   */
+  getAllAnnotations = function(type) {
+    if (Platform.OS === "android") {
+      let requestId = this._nextRequestId++;
+      let requestMap = this._requestMap;
+
+      // We create a promise here that will be resolved once onDataReturned is called.
+      let promise = new Promise(function(resolve, reject) {
+        requestMap[requestId] = { resolve: resolve, reject: reject };
+      });
+
+      UIManager.dispatchViewManagerCommand(
+        findNodeHandle(this.refs.pdfView),
+        this._getViewManagerConfig("RCTPSPDFKitView").Commands
+          .getAllAnnotations,
+        [requestId, type]
+      );
+
+      return promise;
+    } else if (Platform.OS === "ios") {
+      return NativeModules.PSPDFKitViewManager.getAllAnnotations(
+        type,
+        findNodeHandle(this.refs.pdfView)
+      );
+    }
+  };
+
+  /**
    * Applies the passed in document instant json.
    *
    * @param annotations The document instant json to apply.
+   *
+   * Returns a promise resolving to true if the annotation was added.
    */
   addAnnotations = function(annotations) {
     if (Platform.OS === "android") {
+      let requestId = this._nextRequestId++;
+      let requestMap = this._requestMap;
+
+      // We create a promise here that will be resolved once onDataReturned is called.
+      let promise = new Promise(function(resolve, reject) {
+        requestMap[requestId] = { resolve: resolve, reject: reject };
+      });
+
       UIManager.dispatchViewManagerCommand(
         findNodeHandle(this.refs.pdfView),
         this._getViewManagerConfig("RCTPSPDFKitView").Commands.addAnnotations,
-        [annotations]
+        [requestId, annotations]
       );
+
+      return promise;
     } else if (Platform.OS === "ios") {
       return NativeModules.PSPDFKitViewManager.addAnnotations(
         annotations,
