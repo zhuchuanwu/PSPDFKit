@@ -50,6 +50,13 @@
   return self;
 }
 
+- (void)removeFromSuperview {
+  // When the React Native `PSPDFKitView` in unmounted, we need to dismiss the `PSPDFViewController` to avoid orphan popovers.
+  // See https://github.com/PSPDFKit/react-native/issues/277
+  [self.pdfController dismissViewControllerAnimated:NO completion:NULL];
+  [super removeFromSuperview];
+}
+
 - (void)dealloc {
   [self destroyViewControllerRelationship];
   [NSNotificationCenter.defaultCenter removeObserver:self];
@@ -219,7 +226,9 @@
   BOOL success = NO;
   if (data) {
     PSPDFAnnotation *annotation = [PSPDFAnnotation annotationFromInstantJSON:data documentProvider:documentProvider error:error];
-    success = [document addAnnotations:@[annotation] options:nil];
+    if (annotation) {
+      success = [document addAnnotations:@[annotation] options:nil];
+    }
   }
   
   if (!success) {
