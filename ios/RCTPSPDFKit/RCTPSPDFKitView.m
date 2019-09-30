@@ -507,6 +507,28 @@
 
     [self updateClearAnnotationButton];
     self.additionalButtons = @[_clearAnnotationsButton];
+
+    // Hide the callout and the signature buttons from the annotation toolbar.
+    NSMutableArray <PSPDFAnnotationToolbarConfiguration *> *toolbarConfigurations = [NSMutableArray<PSPDFAnnotationToolbarConfiguration *> new];;
+    for(PSPDFAnnotationToolbarConfiguration *toolbarConfiguration in self.configurations) {
+      NSMutableArray<PSPDFAnnotationGroup *> *filteredGroups = [NSMutableArray<PSPDFAnnotationGroup *> new];
+      for (PSPDFAnnotationGroup *group in toolbarConfiguration.annotationGroups) {
+        NSMutableArray<PSPDFAnnotationGroupItem *> *filteredItems = [NSMutableArray<PSPDFAnnotationGroupItem *> new];
+        for(PSPDFAnnotationGroupItem *item in group.items) {
+          BOOL isCallout = [item.variant isEqualToString:PSPDFAnnotationVariantStringFreeTextCallout];
+          BOOL isSignature = [item.type isEqualToString:PSPDFAnnotationStringSignature];
+          if (!isCallout && !isSignature) {
+            [filteredItems addObject:item];
+          }
+        }
+        if (filteredItems.count) {
+          [filteredGroups addObject:[PSPDFAnnotationGroup groupWithItems:filteredItems]];
+        }
+      }
+      [toolbarConfigurations addObject:[[PSPDFAnnotationToolbarConfiguration alloc] initWithAnnotationGroups:filteredGroups]];
+    }
+
+    self.configurations = [toolbarConfigurations copy];
   }
   return self;
 }
