@@ -499,7 +499,7 @@
     [dnc addObserver:self selector:@selector(willShowSpreadViewNotification:) name:PSPDFDocumentViewControllerWillBeginDisplayingSpreadViewNotification object:nil];
 
     // Add clear button
-    UIImage *clearImage = [[PSPDFKit imageNamed:@"trash"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIImage *clearImage = [[PSPDFKitGlobal imageNamed:@"trash"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     _clearAnnotationsButton = [PSPDFToolbarButton new];
     _clearAnnotationsButton.accessibilityLabel = @"Clear";
     [_clearAnnotationsButton setImage:clearImage];
