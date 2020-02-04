@@ -133,14 +133,6 @@ const examples = [
     }
   },
   {
-    key: "item9",
-    name: "Split PDF",
-    description: "Show two PDFs side by side by using PSPDFKitView components.",
-    action: component => {
-      component.props.navigation.navigate("PdfViewSplitScreen");
-    }
-  },
-  {
     key: "item10",
     name: "Instant Example",
     description: "Shows how to open an instant document.",
@@ -280,13 +272,8 @@ class PdfViewScreen extends Component<{}> {
     const params = navigation.state.params || {};
 
     return {
-      title: "PDF",
-      headerRight: (
-        <Button
-          onPress={() => params.handleAnnotationButtonPress()}
-          title="Annotations"
-        />
-      )
+      // Since the PSPDFKitView provides it's own toolbar and back button we don't need a header.
+      header: null,
     };
   };
 
@@ -331,11 +318,16 @@ class PdfViewScreen extends Component<{}> {
           ref="pdfView"
           document="file:///android_asset/Annual Report.pdf"
           configuration={{
+            toolbarTitle: "My Awesome Report",
             backgroundColor: processColor("lightgrey"),
             showThumbnailBar: "scrollable"
           }}
           pageIndex={this.state.currentPageIndex}
           fragmentTag="PDF1"
+          showNavigationButtonInToolbar={true}
+          onNavigationButtonClicked={event => {
+            this.props.navigation.goBack()
+          }}
           menuItemGrouping={[
             "freetext",
             { key: "markup", items: ["highlight", "underline"] },
@@ -396,63 +388,6 @@ class PdfViewScreen extends Component<{}> {
       </View>
     );
   }
-}
-
-class PdfViewSplitScreen extends Component<{}> {
-  static navigationOptions = {
-    title: "PDF"
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = { dimensions: undefined };
-  }
-
-  render() {
-    const layoutDirection = this._getOptimalLayoutDirection();
-    return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: layoutDirection,
-          justifyContent: "center"
-        }}
-        onLayout={this._onLayout}
-      >
-        <PSPDFKitView
-          document="file:///android_asset/Annual Report.pdf"
-          configuration={{
-            backgroundColor: processColor("lightgrey")
-          }}
-          pageIndex={4}
-          fragmentTag="PDF1"
-          style={{ flex: 1, color: pspdfkitColor }}
-        />
-        <PSPDFKitView
-          document="file:///android_asset/Business Report.pdf"
-          configuration={{
-            scrollContinuously: true,
-            pageScrollDirection: "vertical",
-            showThumbnailBar: "none"
-          }}
-          fragmentTag="PDF2"
-          style={{ flex: 1, color: "#9932CC" }}
-        />
-      </View>
-    );
-  }
-
-  _getOptimalLayoutDirection = () => {
-    const width = this.state.dimensions
-      ? this.state.dimensions.width
-      : Dimensions.get("window").width;
-    return width > 450 ? "row" : "column";
-  };
-
-  _onLayout = event => {
-    let { width, height } = event.nativeEvent.layout;
-    this.setState({ dimensions: { width, height } });
-  };
 }
 
 class PdfViewListenersScreen extends Component<{}> {
@@ -816,9 +751,6 @@ export default createAppContainer(
       },
       PdfView: {
         screen: PdfViewScreen
-      },
-      PdfViewSplitScreen: {
-        screen: PdfViewSplitScreen
       },
       PdfViewListenersScreen: {
         screen: PdfViewListenersScreen
