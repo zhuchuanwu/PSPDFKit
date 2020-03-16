@@ -2,7 +2,7 @@
 *   Contains gradle configuration constants
 */
 ext {
-    PSPDFKIT_VERSION = '6.1.1'
+    PSPDFKIT_VERSION = '6.2.0'
 }
 
 buildscript {
@@ -69,7 +69,7 @@ if (demoVersion) {
 }
 
 dependencies {
-    implementation("com.pspdfkit:pspdfkit:${PSPDFKIT_VERSION}") {
+    api("com.pspdfkit:pspdfkit:${PSPDFKIT_VERSION}") {
         exclude group: 'com.google.auto.value', module: 'auto-value'
     }
     implementation "com.facebook.react:react-native:+"
