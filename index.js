@@ -546,6 +546,12 @@ PSPDFKitView.propTypes = {
    */
   showCloseButton: PropTypes.bool,
   /**
+   * Controls the global bar tint color of the navigation bar used by the PSPDFKit view.
+   *
+   * @platform ios
+   */
+  barTintColor: PropTypes.string,
+  /**
    * Controls wheter or not the default action for tapped annotations is processed. Defaults to processing the action (false).
    */
   disableDefaultActionForTappedAnnotations: PropTypes.bool,

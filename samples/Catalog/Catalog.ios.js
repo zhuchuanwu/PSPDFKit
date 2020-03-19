@@ -262,7 +262,8 @@ class SplitPDF extends Component {
             pageScrollDirection: "vertical",
             pageMode: "single"
           }}
-          style={{ flex: 1, color: "#9932CC" }}
+          style={{ flex: 1, color: "#002266" }}
+          barTintColor="#ccebff"
         />
       </View>
     );

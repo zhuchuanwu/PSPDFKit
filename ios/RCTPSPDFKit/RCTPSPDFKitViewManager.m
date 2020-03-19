@@ -87,6 +87,29 @@ RCT_EXPORT_VIEW_PROPERTY(disableAutomaticSaving, BOOL)
 
 RCT_REMAP_VIEW_PROPERTY(color, tintColor, UIColor)
 
+RCT_CUSTOM_VIEW_PROPERTY(barTintColor, UIColor, RCTPSPDFKitView) {
+  if (json && [RCTConvert UIColor:json]) {
+    UIColor *barColor = [RCTConvert UIColor:json];
+
+    UINavigationBar *navBarPopoverProxy = [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[PSPDFNavigationController.class]];
+
+    // On iOS 13 and later.
+    if (@available(iOS 13, *)) {
+        // For `UINavigationBar`.
+        UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
+        navigationBarAppearance.backgroundColor = barColor;
+
+        // Use the same appearance for all navigation bar modes.
+        navBarPopoverProxy.standardAppearance = navigationBarAppearance;
+        navBarPopoverProxy.compactAppearance = navigationBarAppearance;
+        navBarPopoverProxy.scrollEdgeAppearance = navigationBarAppearance;
+    } else {
+        // On iOS 12 and earlier.
+        navBarPopoverProxy.barTintColor = barColor;
+    }
+  }
+}
+
 RCT_CUSTOM_VIEW_PROPERTY(showCloseButton, BOOL, RCTPSPDFKitView) {
   if (json && [RCTConvert BOOL:json]) {
     view.pdfController.navigationItem.leftBarButtonItems = @[view.closeButton];
