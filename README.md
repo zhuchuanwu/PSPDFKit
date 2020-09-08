@@ -37,9 +37,9 @@ To make sure this is fast, please use a work email and have someone from your co
 
 #### Requirements
 
-- Xcode 11.5
-- PSPDFKit 9.5.0 for iOS or later
-- react-native >= 0.62.2
+- Xcode 11.7
+- PSPDFKit 9.5.2 for iOS or later
+- react-native >= 0.63.2
 - CocoaPods >= 1.9.3
 
 #### Getting Started
@@ -54,41 +54,32 @@ Let's create a simple app that integrates PSPDFKit and uses the `react-native-ps
 6. Open `ios/Podile` in a text editor: `open ios/Podfile`, update the platform to iOS 12, and add the PSPDFKit podspecs:
 
 ```diff
-- platform :ios, '9.0'
-+ platform :ios, '12.0'
+require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
+- platform :ios, '10.0'
++ platform :ios, '12.0'
+
 target 'YourApp' do
-  # Pods for YourApp
-  pod 'React', :path => '../node_modules/react-native/'
-  pod 'React-Core', :path => '../node_modules/react-native/React'
-  pod 'React-DevSupport', :path => '../node_modules/react-native/React'
-  pod 'React-fishhook', :path => '../node_modules/react-native/Libraries/fishhook'
-  pod 'React-RCTActionSheet', :path => '../node_modules/react-native/Libraries/ActionSheetIOS'
-  pod 'React-RCTAnimation', :path => '../node_modules/react-native/Libraries/NativeAnimation'
-  pod 'React-RCTBlob', :path => '../node_modules/react-native/Libraries/Blob'
-  pod 'React-RCTImage', :path => '../node_modules/react-native/Libraries/Image'
-  pod 'React-RCTLinking', :path => '../node_modules/react-native/Libraries/LinkingIOS'
-  pod 'React-RCTNetwork', :path => '../node_modules/react-native/Libraries/Network'
-  pod 'React-RCTSettings', :path => '../node_modules/react-native/Libraries/Settings'
-  pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text'
-  pod 'React-RCTVibration', :path => '../node_modules/react-native/Libraries/Vibration'
-  pod 'React-RCTWebSocket', :path => '../node_modules/react-native/Libraries/WebSocket'
+  config = use_native_modules!
 
-  pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
-  pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
-  pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
-  pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
-  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  use_react_native!(:path => config["reactNativePath"])
 
-  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
-  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
-  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
-
-+ pod 'react-native-pspdfkit', :path => '../node_modules/react-native-pspdfkit/react-native-pspdfkit.podspec'
-+ pod 'PSPDFKit', podspec: 'https://customers.pspdfkit.com/pspdfkit-ios/latest.podspec'
-
-  use_native_modules!
+  target 'YourAppTests' do
+    inherit! :complete
+    # Pods for testing
+  end
++ pod 'react-native-pspdfkit', :path => '../node_modules/react-native-pspdfkit'
++ pod 'PSPDFKit', podspec: 'https://customers.pspdfkit.com/pspdfkit-ios/latest-framework.podspec'
+  
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable these next few lines.
+  use_flipper!
+  post_install do |installer|
+    flipper_post_install(installer)
+  end
 end
 ```
 
@@ -277,7 +268,12 @@ Take a look at the [instructions to get started here](/samples/NativeCatalog/REA
 
 Using PSPDFKit React Native Wrapper on Mac Catalyst does not currently work due to a [Flipper and FlipperKit issue](https://github.com/facebook/react-native/issues/28810).
 
-If you wish to run your project on Mac Catalyst, please try the [following workaround which removes everything related to Flipper and FlipperKit](https://github.com/facebook/react-native/issues/28810#issuecomment-623357732).
+If you wish to run your project on Mac Catalyst, please try the [following workaround which removes everything related to Flipper and FlipperKit](https://github.com/facebook/react-native/issues/28810#issuecomment-623357732), and update the podspec URL for PSPDFKit in your Podfile like so:
+
+```diff
+- pod 'PSPDFKit', podspec: 'https://customers.pspdfkit.com/pspdfkit-ios/latest-framework.podspec'
++ pod 'PSPDFKit', podspec: 'https://customers.pspdfkit.com/pspdfkit-ios/latest.podspec'
+```
 
 #### Configuration Mapping
 
@@ -391,35 +387,7 @@ Let's create a simple app that integrates PSPDFKit and uses the react-native-psp
 3. Step into your newly created app folder: `cd YourApp`.
 4. Add `react-native-pspdfkit` module from GitHub: `yarn add github:PSPDFKit/react-native`.
 5. Install all the dependencies for the project: `yarn install`. (Because of a [bug](https://github.com/yarnpkg/yarn/issues/2165) you may need to clean `yarn`'s cache with `yarn cache clean` before.)
-6. <a id="step-7"></a>Add PSPDFKit repository to `YourApp/android/build.gradle` so PSPDFKit library can be downloaded:
-
-```diff
- allprojects {
-     repositories {
-         mavenLocal()
-+        maven {
-+            url 'https://customers.pspdfkit.com/maven/'
-+            credentials {
-+                username 'pspdfkit'
-+                password 'YOUR_MAVEN_KEY_GOES_HERE'
-+            }
-+        }
-         maven {
-             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-             url "$rootDir/../node_modules/react-native/android"
-         }
-         maven {
-            // Android JSC is installed from npm
-            url("$rootDir/../node_modules/jsc-android/dist")
-         }
-
-         google()
-         jcenter()
-     }
- }
-```
-
-7. PSPDFKit targets modern platforms, so you'll have to set the `minSdkVersion` to 19. In `YourApp/android/build.gradle`:
+6. PSPDFKit targets modern platforms, so you'll have to set the `minSdkVersion` to 19. In `YourApp/android/build.gradle`:
 
 ```diff
 ...
@@ -434,7 +402,7 @@ Let's create a simple app that integrates PSPDFKit and uses the react-native-psp
 ...
 ```
 
-8. We will also need to enable MultiDex support. In `YourApp/android/app/build.gradle`:
+7. We will also need to enable MultiDex support. In `YourApp/android/app/build.gradle`:
 
 ```diff
 ...
@@ -449,7 +417,7 @@ Let's create a simple app that integrates PSPDFKit and uses the react-native-psp
 ...
 ```
 
-9. <a id="step-10"></a>Enter your PSPDFKit license key into `YourApp/android/app/src/main/AndroidManifest.xml` file:
+8. <a id="step-10"></a>Enter your PSPDFKit license key into `YourApp/android/app/src/main/AndroidManifest.xml` file:
 
 ```diff
    <application>
@@ -462,7 +430,7 @@ Let's create a simple app that integrates PSPDFKit and uses the react-native-psp
    </application>
 ```
 
-10. Set primary color. In `YourApp/android/app/src/main/res/values/styles.xml` replace
+9. Set primary color. In `YourApp/android/app/src/main/res/values/styles.xml` replace
 
 ```xml
 <!-- Customize your theme here. -->
@@ -474,7 +442,7 @@ with
 <item name="colorPrimary">#3C97C9</item>
 ```
 
-11. <a id="step-12"></a>Replace the default component from `YourApp/App.js` with a simple touch area to present a PDF document from the local device filesystem:
+10. <a id="step-12"></a>Replace the default component from `YourApp/App.js` with a simple touch area to present a PDF document from the local device filesystem:
 
 ```javascript
 import React, { Component } from "react";
@@ -545,13 +513,13 @@ const styles = StyleSheet.create({
 });
 ```
 
-12. Before launching the app you need to copy a PDF document onto your development device or emulator.
+11. Before launching the app you need to copy a PDF document onto your development device or emulator.
 
     ```bash
     adb push /path/to/your/document.pdf /sdcard/document.pdf
     ```
 
-13. Your app is now ready to launch. From `YourApp` directory run `react-native run-android`.
+12. Your app is now ready to launch. From `YourApp` directory run `react-native run-android`.
 
     ```bash
     react-native run-android
@@ -561,20 +529,7 @@ const styles = StyleSheet.create({
 
 1. Clone the repository. `git clone https://github.com/PSPDFKit/react-native.git`.
 2. Install dependencies: run `yarn install` from `samples/Catalog` directory. (Because of a [bug](https://github.com/yarnpkg/yarn/issues/2165) you may need to clean `yarn`'s cache with `yarn cache clean` before.)
-3. Add your customer portal password to `samples/Catalog/android/build.gradle`:
-
-```groovy
-      maven {
-          url 'https://customers.pspdfkit.com/maven/'
-
-          credentials {
-              username 'pspdfkit'
-              password 'YOUR_MAVEN_PASSWORD_GOES_HERE'
-          }
-      }
-```
-
-4. Update license key in `samples/Catalog/android/app/src/main/AndroidManifest.xml`:
+3. Update license key in `samples/Catalog/android/app/src/main/AndroidManifest.xml`:
 
 ```xml
    <application>
@@ -587,7 +542,7 @@ const styles = StyleSheet.create({
    </application>
 ```
 
-5. Catalog app is now ready to launch. From `samples/Catalog` directory run `react-native run-android`.
+4. Catalog app is now ready to launch. From `samples/Catalog` directory run `react-native run-android`.
 
 #### Running the Native Catalog
 
