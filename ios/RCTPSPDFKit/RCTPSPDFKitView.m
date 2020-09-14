@@ -22,6 +22,9 @@
 
 @end
 
+@interface RCTPSPDFKitViewController : PSPDFViewController
+@end
+
 @interface RCTPSPDFKitView ()<PSPDFDocumentDelegate, PSPDFViewControllerDelegate, PSPDFFlexibleToolbarContainerDelegate>
 
 @property (nonatomic, nullable) UIViewController *topController;
@@ -34,19 +37,19 @@
   if ((self = [super initWithFrame:frame])) {
     // Set configuration to use the custom annotation tool bar when initializing the PSPDFViewController.
     // For more details, see `PSCCustomizeAnnotationToolbarExample.m` from PSPDFCatalog and our documentation here: https://pspdfkit.com/guides/ios/current/customizing-the-interface/customize-the-annotation-toolbar/
-    _pdfController = [[PSPDFViewController alloc] initWithDocument:nil configuration:[PSPDFConfiguration configurationWithBuilder:^(PSPDFConfigurationBuilder *builder) {
+    _pdfController = [[RCTPSPDFKitViewController alloc] initWithDocument:nil configuration:[PSPDFConfiguration configurationWithBuilder:^(PSPDFConfigurationBuilder *builder) {
       [builder overrideClass:PSPDFAnnotationToolbar.class withClass:CustomButtonAnnotationToolbar.class];
     }]];
 
     _pdfController.delegate = self;
     _pdfController.annotationToolbarController.delegate = self;
     _closeButton = [[UIBarButtonItem alloc] initWithImage:[PSPDFKitGlobal imageNamed:@"x"] style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonPressed:)];
-    
+
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(annotationChangedNotification:) name:PSPDFAnnotationChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(annotationChangedNotification:) name:PSPDFAnnotationsAddedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(annotationChangedNotification:) name:PSPDFAnnotationsRemovedNotification object:nil];
   }
-  
+
   return self;
 }
 
@@ -67,21 +70,20 @@
   if (controller == nil || self.window == nil || self.topController != nil) {
     return;
   }
-  
+
   if (self.pdfController.configuration.useParentNavigationBar || self.hideNavigationBar) {
     self.topController = self.pdfController;
-    
   } else {
-    self.topController = [[PSPDFNavigationController alloc] initWithRootViewController:self.pdfController];;
+    self.topController = [[PSPDFNavigationController alloc] initWithRootViewController:self.pdfController];
   }
-  
+
   UIView *topControllerView = self.topController.view;
   topControllerView.translatesAutoresizingMaskIntoConstraints = NO;
-  
+
   [self addSubview:topControllerView];
   [controller addChildViewController:self.topController];
   [self.topController didMoveToParentViewController:controller];
-  
+
   [NSLayoutConstraint activateConstraints:
    @[[topControllerView.topAnchor constraintEqualToAnchor:self.topAnchor],
      [topControllerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
@@ -100,7 +102,7 @@
 - (void)closeButtonPressed:(nullable id)sender {
   if (self.onCloseButtonPressed) {
     self.onCloseButtonPressed(@{});
-    
+
   } else {
     // try to be smart and pop if we are not displayed modally.
     BOOL shouldDismiss = YES;
@@ -202,7 +204,7 @@
 - (NSDictionary<NSString *, NSArray<NSDictionary *> *> *)getAnnotations:(PSPDFPageIndex)pageIndex type:(PSPDFAnnotationType)type error:(NSError *_Nullable *)error {
   PSPDFDocument *document = self.pdfController.document;
   VALIDATE_DOCUMENT(document, nil);
-  
+
   NSArray <PSPDFAnnotation *> *annotations = [document annotationsForPageAtIndex:pageIndex type:type];
   NSArray <NSDictionary *> *annotationsJSON = [RCTConvert instantJSONFromAnnotations:annotations error:error];
   return @{@"annotations" : annotationsJSON};
@@ -218,11 +220,11 @@
     NSLog(@"Invalid JSON Annotation.");
     return NO;
   }
-  
+
   PSPDFDocument *document = self.pdfController.document;
   VALIDATE_DOCUMENT(document, NO)
   PSPDFDocumentProvider *documentProvider = document.documentProviders.firstObject;
-  
+
   BOOL success = NO;
   if (data) {
     PSPDFAnnotation *annotation = [PSPDFAnnotation annotationFromInstantJSON:data documentProvider:documentProvider error:error];
@@ -230,11 +232,11 @@
       success = [document addAnnotations:@[annotation] options:nil];
     }
   }
-  
+
   if (!success) {
     NSLog(@"Failed to add annotation.");
   }
-  
+
   return success;
 }
 
@@ -242,7 +244,7 @@
   PSPDFDocument *document = self.pdfController.document;
   VALIDATE_DOCUMENT(document, NO)
   BOOL success = NO;
-  
+
   NSArray<PSPDFAnnotation *> *allAnnotations = [[document allAnnotationsOfType:PSPDFAnnotationTypeAll].allValues valueForKeyPath:@"@unionOfArrays.self"];
   for (PSPDFAnnotation *annotation in allAnnotations) {
     // Remove the annotation if the uuids match.
@@ -251,7 +253,7 @@
       break;
     }
   }
-  
+
   if (!success) {
     NSLog(@"Failed to remove annotation.");
   }
@@ -261,7 +263,7 @@
 - (NSDictionary<NSString *, NSArray<NSDictionary *> *> *)getAllUnsavedAnnotationsWithError:(NSError *_Nullable *)error {
   PSPDFDocument *document = self.pdfController.document;
   VALIDATE_DOCUMENT(document, nil)
-  
+
   PSPDFDocumentProvider *documentProvider = document.documentProviders.firstObject;
   NSData *data = [document generateInstantJSONFromDocumentProvider:documentProvider error:error];
   NSDictionary *annotationsJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:error];
@@ -287,7 +289,7 @@
     NSLog(@"Invalid JSON Annotations.");
     return NO;
   }
-  
+
   PSPDFDataContainerProvider *dataContainerProvider = [[PSPDFDataContainerProvider alloc] initWithData:data];
   PSPDFDocument *document = self.pdfController.document;
   VALIDATE_DOCUMENT(document, NO)
@@ -296,7 +298,7 @@
   if (!success) {
     NSLog(@"Failed to add annotations.");
   }
-  
+
   [self.pdfController reloadData];
   return success;
 }
@@ -308,17 +310,17 @@
     NSLog(@"Invalid fully qualified name.");
     return nil;
   }
-  
+
   PSPDFDocument *document = self.pdfController.document;
   VALIDATE_DOCUMENT(document, nil)
-  
+
   for (PSPDFFormElement *formElement in document.formParser.forms) {
     if ([formElement.fullyQualifiedFieldName isEqualToString:fullyQualifiedName]) {
       id formFieldValue = formElement.value;
       return @{@"value": formFieldValue ?: [NSNull new]};
     }
   }
-  
+
   return @{@"error": @"Failed to get the form field value."};
 }
 
@@ -327,7 +329,7 @@
     NSLog(@"Invalid fully qualified name.");
     return NO;
   }
-  
+
   PSPDFDocument *document = self.pdfController.document;
   VALIDATE_DOCUMENT(document, NO)
 
@@ -376,7 +378,7 @@
     }
     return;
   }
-  
+
   NSString *name = notification.name;
   NSString *change;
   if ([name isEqualToString:PSPDFAnnotationChangedNotification]) {
@@ -386,7 +388,7 @@
   } else if ([name isEqualToString:PSPDFAnnotationsRemovedNotification]) {
     change = @"removed";
   }
-  
+
   NSArray <NSDictionary *> *annotationsJSON = [RCTConvert instantJSONFromAnnotations:annotations error:NULL];
   if (self.onAnnotationsChanged) {
     self.onAnnotationsChanged(@{@"change" : change, @"annotations" : annotationsJSON});
@@ -403,7 +405,7 @@
       [leftItems addObject:barButtonItem];
     }
   }
-  
+
   if (viewMode.length) {
     [self.pdfController.navigationItem setLeftBarButtonItems:[leftItems copy] forViewMode:[RCTConvert PSPDFViewMode:viewMode] animated:animated];
   } else {
@@ -419,7 +421,7 @@
       [rightItems addObject:barButtonItem];
     }
   }
-  
+
   if (viewMode.length) {
     [self.pdfController.navigationItem setRightBarButtonItems:[rightItems copy] forViewMode:[RCTConvert PSPDFViewMode:viewMode] animated:animated];
   } else {
@@ -434,7 +436,7 @@
   } else {
     items = [self.pdfController.navigationItem leftBarButtonItems];
   }
-  
+
   return [self buttonItemsStringFromUIBarButtonItems:items];
 }
 
@@ -445,7 +447,7 @@
   } else {
     items = [self.pdfController.navigationItem rightBarButtonItems];
   }
-  
+
   return [self buttonItemsStringFromUIBarButtonItems:items];
 }
 
@@ -465,7 +467,7 @@
         break;
       }
     }
-    
+
     self.onStateChanged(@{@"documentLoaded" : @(isDocumentLoaded),
                           @"currentPageIndex" : @(pageIndex),
                           @"pageCount" : @(pageCount),
@@ -486,6 +488,28 @@
     }
   }];
   return [barButtonItemsString copy];
+}
+
+@end
+
+@implementation RCTPSPDFKitViewController
+
+- (void)viewWillTransitionToSize:(CGSize)newSize withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:newSize withTransitionCoordinator:coordinator];
+
+  /* Workaround for internal issue 25653:
+   We re-apply the current view state to workaround an issue where the last page view would be layed out incorrectly
+   in single page mode and scroll per spread page trasition after device rotation.
+
+   We do this because the `PSPDFViewController` is not embedded as recommended in
+   https://pspdfkit.com/guides/ios/current/customizing-the-interface/embedding-the-pdfviewcontroller-inside-a-custom-container-view-controller
+   and because React Native itself handles the React Native view.
+
+   TL;DR: We are adding the `PSPDFViewController` to `RCTPSPDFKitView` and not to the container controller's view.
+   */
+  [coordinator animateAlongsideTransition:NULL completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+    [self applyViewState:self.viewState animateIfPossible:NO];
+  }];
 }
 
 @end
