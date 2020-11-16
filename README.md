@@ -37,10 +37,10 @@ To make sure this is fast, please use a work email and have someone from your co
 
 #### Requirements
 
-- Xcode 12
-- PSPDFKit 10.0.0 for iOS or later
-- react-native >= 0.63.2
-- CocoaPods >= 1.10.0.rc.1
+- The latest [Xcode](https://developer.apple.com/xcode/).
+- PSPDFKit 10.1.0 for iOS or later
+- react-native >= 0.63.3
+- CocoaPods >= 1.10.0
 
 #### Getting Started
 
@@ -89,11 +89,9 @@ end
    ![Deployment Target](screenshots/deployment-target.png)
 10. Change "View controller-based status bar appearance" to `YES` in `Info.plist`:
     ![View Controller-Based Status Bar Appearance](screenshots/view-controller-based-status-bar-appearance.png)
-11. If your application is targeting iOS versions **prior to iOS 12.2** and your application **does not already contain any Swift code**, then you need to make sure Xcode bundles Swift standard libraries with your application distribution. To to so, open your target Build Settings and enable `Always Embed Swift Standard Libraries`:
-    ![Always Embed Swift Standard Libraries](screenshots/always-embed-swift-standard-libraries.png)
-12. Add a PDF by drag and dropping it into your Xcode project (Select "Create groups" and add to target "YourApp"). This will add the document to the "Copy Bundle Resources" build phase:
+11. Add a PDF by drag and dropping it into your Xcode project (Select "Create groups" and add to target "YourApp"). This will add the document to the "Copy Bundle Resources" build phase:
     ![Adding PDF](screenshots/adding-pdf.png)
-13. Replace the default component from `App.js` with a simple touch area to present the bundled PDF. (Note that you can also use a [Native UI Component](#native-ui-component) to show a PDF.)
+12. Replace the default component from `App.js` with a simple touch area to present the bundled PDF. (Note that you can also use a [Native UI Component](#native-ui-component) to show a PDF.)
 
 ```javascript
 import React, { Component } from "react";
@@ -370,8 +368,8 @@ For a runnable example, please take a look at the [AnnotationProcessing example 
 - Android Build Tools 23.0.1 (React Native)
 - Android Build Tools 28.0.3 (PSPDFKit module)
 - Android Gradle plugin >= 3.4.1
-- PSPDFKit >= 5.4.2
-- react-native >= 0.60.4
+- PSPDFKit >= 6.5.3
+- react-native >= 0.63.2
 
 #### Getting Started
 
@@ -382,7 +380,20 @@ Let's create a simple app that integrates PSPDFKit and uses the react-native-psp
 3. Step into your newly created app folder: `cd YourApp`.
 4. Add `react-native-pspdfkit` module from GitHub: `yarn add github:PSPDFKit/react-native`.
 5. Install all the dependencies for the project: `yarn install`. (Because of a [bug](https://github.com/yarnpkg/yarn/issues/2165) you may need to clean `yarn`'s cache with `yarn cache clean` before.)
-6. PSPDFKit targets modern platforms, so you'll have to set the `minSdkVersion` to 19. In `YourApp/android/build.gradle`:
+6. Add PSPDFKit repository to `YourApp/android/build.gradle` so PSPDFKit library can be downloaded:
+
+```diff
+...
+ allprojects {
+     repositories {
+         mavenLocal()
++        maven {
++            url 'https://customers.pspdfkit.com/maven/'
++        }
+...
+```
+
+7. PSPDFKit targets modern platforms, so you'll have to set the `minSdkVersion` to 19. In `YourApp/android/build.gradle`:
 
 ```diff
 ...
@@ -397,7 +408,7 @@ Let's create a simple app that integrates PSPDFKit and uses the react-native-psp
 ...
 ```
 
-7. We will also need to enable MultiDex support. In `YourApp/android/app/build.gradle`:
+8. We will also need to enable MultiDex support. In `YourApp/android/app/build.gradle`:
 
 ```diff
 ...
@@ -412,7 +423,7 @@ Let's create a simple app that integrates PSPDFKit and uses the react-native-psp
 ...
 ```
 
-8. <a id="step-10"></a>Enter your PSPDFKit license key into `YourApp/android/app/src/main/AndroidManifest.xml` file:
+9. <a id="step-9"></a>Enter your PSPDFKit license key into `YourApp/android/app/src/main/AndroidManifest.xml` file:
 
 ```diff
    <application>
@@ -425,7 +436,7 @@ Let's create a simple app that integrates PSPDFKit and uses the react-native-psp
    </application>
 ```
 
-9. Set primary color. In `YourApp/android/app/src/main/res/values/styles.xml` replace
+10. Set primary color. In `YourApp/android/app/src/main/res/values/styles.xml` replace
 
 ```xml
 <!-- Customize your theme here. -->
@@ -437,7 +448,7 @@ with
 <item name="colorPrimary">#3C97C9</item>
 ```
 
-10. <a id="step-12"></a>Replace the default component from `YourApp/App.js` with a simple touch area to present a PDF document from the local device filesystem:
+11. <a id="step-11"></a>Replace the default component from `YourApp/App.js` with a simple touch area to present a PDF document from the local device filesystem:
 
 ```javascript
 import React, { Component } from "react";
@@ -508,13 +519,13 @@ const styles = StyleSheet.create({
 });
 ```
 
-11. Before launching the app you need to copy a PDF document onto your development device or emulator.
+12. Before launching the app you need to copy a PDF document onto your development device or emulator.
 
     ```bash
     adb push /path/to/your/document.pdf /sdcard/document.pdf
     ```
 
-12. Your app is now ready to launch. From `YourApp` directory run `react-native run-android`.
+13. Your app is now ready to launch. From `YourApp` directory run `react-native run-android`.
 
     ```bash
     react-native run-android
