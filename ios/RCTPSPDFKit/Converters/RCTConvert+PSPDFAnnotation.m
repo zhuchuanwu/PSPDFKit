@@ -1,5 +1,5 @@
 //
-//  Copyright © 2018-2020 PSPDFKit GmbH. All rights reserved.
+//  Copyright © 2018-2021 PSPDFKit GmbH. All rights reserved.
 //
 //  THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY INTERNATIONAL COPYRIGHT LAW
 //  AND MAY NOT BE RESOLD OR REDISTRIBUTED. USAGE IS BOUND TO THE PSPDFKIT LICENSE AGREEMENT.
@@ -54,10 +54,14 @@
     return PSPDFAnnotationTypeLine;
   } else if ([type isEqualToString:@"pspdfkit/shape/polygon"]) {
     return PSPDFAnnotationTypePolygon;
+  } else if ([type isEqualToString:@"pspdfkit/shape/polyline"]) {
+    return PSPDFAnnotationTypePolyLine;
   } else if ([type isEqualToString:@"pspdfkit/shape/rectangle"]) {
     return PSPDFAnnotationTypeSquare;
   } else if ([type isEqualToString:@"pspdfkit/text"]) {
     return PSPDFAnnotationTypeFreeText;
+  } else if ([type isEqualToString:@"pspdfkit/stamp"]) {
+    return PSPDFAnnotationTypeStamp;
   } else {
     return PSPDFAnnotationTypeUndefined;
   }

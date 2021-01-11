@@ -253,6 +253,9 @@ Example - Native UI Component:
 
 #### Running Catalog Project
 
+- Clone the repository: `git clone https://github.com/PSPDFKit/react-native.git`.
+- Step into your newly cloned folder: `cd react-native` and create a new `PSPDFKit` directory: `mkdir PSPDFKit`.
+- [Download the latest version of PSPDFKit for iOS](https://customers.pspdfkit.com/download/binary/ios/latest) and mount the DMG file.
 - Copy `PSPDFKit.xcframework` and `PSPDFKitUI.xcframework` into the `PSPDFKit` directory.
 - Install dependencies: `yarn install` in `samples/Catalog` directory. (Because of a [bug](https://github.com/yarnpkg/yarn/issues/2165) you may need to clean `yarn`'s cache with `yarn cache clean` before.)
 - Run the app with `react-native-cli`: `react-native run-ios`
@@ -695,7 +698,7 @@ Windows UWP is not currently supported on `master`, please follow the integratio
 ## License
 
 This project can be used for evaluation or if you have a valid PSPDFKit license.  
-All items and source code Copyright © 2010-2019 PSPDFKit GmbH.
+All items and source code Copyright © 2010-2021 PSPDFKit GmbH.
 
 See LICENSE for details.
 
