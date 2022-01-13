@@ -3,7 +3,7 @@
  *
  *   PSPDFKit
  *
- *   Copyright © 2021 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2022 PSPDFKit GmbH. All rights reserved.
  *
  *   THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY INTERNATIONAL COPYRIGHT LAW
  *   AND MAY NOT BE RESOLD OR REDISTRIBUTED. USAGE IS BOUND TO THE PSPDFKIT LICENSE AGREEMENT.
@@ -75,6 +75,7 @@ public class PdfViewStateChangedEvent extends Event<PdfViewStateChangedEvent> {
         eventData.putInt("currentPageIndex", currentPageIndex);
         eventData.putInt("pageCount", pageCount);
         eventData.putBoolean("annotationCreationActive", annotationCreationActive);
+        eventData.putInt("affectedPageIndex", currentPageIndex);
         eventData.putBoolean("annotationEditingActive", annotationEditingActive);
         eventData.putBoolean("textSelectionActive", textSelectionActive);
         eventData.putBoolean("formEditingActive", formEditingActive);
