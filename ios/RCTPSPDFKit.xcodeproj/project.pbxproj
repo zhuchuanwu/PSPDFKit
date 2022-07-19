@@ -7,6 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4DC5A4B42886674F008129BE /* PSCAssetLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A49D2886674E008129BE /* PSCAssetLoader.m */; };
+		4DC5A4B52886674F008129BE /* AssetLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A49F2886674F008129BE /* AssetLoader.swift */; };
+		4DC5A4B62886674F008129BE /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4A02886674F008129BE /* CatalogViewController.swift */; };
+		4DC5A4B72886674F008129BE /* MoreInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4A12886674F008129BE /* MoreInfoCoordinator.swift */; };
+		4DC5A4B82886674F008129BE /* SidebarControllersContainingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4A32886674F008129BE /* SidebarControllersContainingViewController.swift */; };
+		4DC5A4B92886674F008129BE /* AssetName+ExpressibleByStringLiteral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4A42886674F008129BE /* AssetName+ExpressibleByStringLiteral.swift */; };
+		4DC5A4BA2886674F008129BE /* CatalogHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4A52886674F008129BE /* CatalogHeaderView.swift */; };
+		4DC5A4BB2886674F008129BE /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4A62886674F008129BE /* Example.swift */; };
+		4DC5A4BC2886674F008129BE /* PSCExampleLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4A72886674F008129BE /* PSCExampleLookup.m */; };
+		4DC5A4BD2886674F008129BE /* PSCExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4A82886674F008129BE /* PSCExample.m */; };
+		4DC5A4BE2886674F008129BE /* SectionDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4A92886674F008129BE /* SectionDescriptor.swift */; };
+		4DC5A4BF2886674F008129BE /* FileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4AA2886674F008129BE /* FileHelper.swift */; };
+		4DC5A4C02886674F008129BE /* Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4AC2886674F008129BE /* Content.swift */; };
+		4DC5A4C12886674F008129BE /* URLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4AE2886674F008129BE /* URLHelper.swift */; };
+		4DC5A4C22886674F008129BE /* IndustryExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4AF2886674F008129BE /* IndustryExample.swift */; };
+		4DC5A4C32886674F008129BE /* Examples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4B02886674F008129BE /* Examples.swift */; };
+		4DC5A4C42886674F008129BE /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4B12886674F008129BE /* Application.swift */; };
+		4DC5A4C52886674F008129BE /* CatalogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4B22886674F008129BE /* CatalogCell.swift */; };
+		4DC5A4C62886674F008129BE /* AdaptivePDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4B32886674F008129BE /* AdaptivePDFViewController.swift */; };
+		4DC5A4D228866791008129BE /* NSRecursiveLockExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4CB28866790008129BE /* NSRecursiveLockExtensions.swift */; };
+		4DC5A4D328866791008129BE /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4CC28866790008129BE /* UIViewControllerExtensions.swift */; };
+		4DC5A4D428866791008129BE /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4CD28866790008129BE /* UIImageExtensions.swift */; };
+		4DC5A4D528866791008129BE /* UIBarButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4CE28866790008129BE /* UIBarButtonExtensions.swift */; };
+		4DC5A4D628866791008129BE /* InkAnnotation+Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4CF28866790008129BE /* InkAnnotation+Samples.swift */; };
+		4DC5A4D728866791008129BE /* NSUserActivityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4D028866790008129BE /* NSUserActivityExtensions.swift */; };
+		4DC5A4D828866791008129BE /* UIColor+CatalogDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5A4D128866791008129BE /* UIColor+CatalogDefaults.swift */; };
 		6540D1841D89D22E00B8F94F /* RCTPSPDFKitManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6540D1831D89D22E00B8F94F /* RCTPSPDFKitManager.m */; };
 		6572780C1D86AE7300A5E1A8 /* RCTConvert+PSPDFConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 657278071D86AE7300A5E1A8 /* RCTConvert+PSPDFConfiguration.m */; };
 		657278111D86AEC600A5E1A8 /* RCTConvert+PSPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 657278101D86AEC600A5E1A8 /* RCTConvert+PSPDFDocument.m */; };
@@ -32,6 +58,40 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4DC5A49C2886674E008129BE /* RCTPSPDFKit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCTPSPDFKit-Bridging-Header.h"; sourceTree = "<group>"; };
+		4DC5A49D2886674E008129BE /* PSCAssetLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCAssetLoader.m; sourceTree = "<group>"; };
+		4DC5A49E2886674E008129BE /* PSCExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCExample.h; sourceTree = "<group>"; };
+		4DC5A49F2886674F008129BE /* AssetLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetLoader.swift; sourceTree = "<group>"; };
+		4DC5A4A02886674F008129BE /* CatalogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
+		4DC5A4A12886674F008129BE /* MoreInfoCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreInfoCoordinator.swift; sourceTree = "<group>"; };
+		4DC5A4A22886674F008129BE /* PSCExampleLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCExampleLookup.h; sourceTree = "<group>"; };
+		4DC5A4A32886674F008129BE /* SidebarControllersContainingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarControllersContainingViewController.swift; sourceTree = "<group>"; };
+		4DC5A4A42886674F008129BE /* AssetName+ExpressibleByStringLiteral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AssetName+ExpressibleByStringLiteral.swift"; sourceTree = "<group>"; };
+		4DC5A4A52886674F008129BE /* CatalogHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogHeaderView.swift; sourceTree = "<group>"; };
+		4DC5A4A62886674F008129BE /* Example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
+		4DC5A4A72886674F008129BE /* PSCExampleLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCExampleLookup.m; sourceTree = "<group>"; };
+		4DC5A4A82886674F008129BE /* PSCExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCExample.m; sourceTree = "<group>"; };
+		4DC5A4A92886674F008129BE /* SectionDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionDescriptor.swift; sourceTree = "<group>"; };
+		4DC5A4AA2886674F008129BE /* FileHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHelper.swift; sourceTree = "<group>"; };
+		4DC5A4AB2886674F008129BE /* PSCMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCMacros.h; sourceTree = "<group>"; };
+		4DC5A4AC2886674F008129BE /* Content.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Content.swift; sourceTree = "<group>"; };
+		4DC5A4AD2886674F008129BE /* PSCAssetLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCAssetLoader.h; sourceTree = "<group>"; };
+		4DC5A4AE2886674F008129BE /* URLHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLHelper.swift; sourceTree = "<group>"; };
+		4DC5A4AF2886674F008129BE /* IndustryExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndustryExample.swift; sourceTree = "<group>"; };
+		4DC5A4B02886674F008129BE /* Examples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Examples.swift; sourceTree = "<group>"; };
+		4DC5A4B12886674F008129BE /* Application.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		4DC5A4B22886674F008129BE /* CatalogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatalogCell.swift; sourceTree = "<group>"; };
+		4DC5A4B32886674F008129BE /* AdaptivePDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdaptivePDFViewController.swift; sourceTree = "<group>"; };
+		4DC5A4C72886675A008129BE /* CatalogSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatalogSwift.h; sourceTree = "<group>"; };
+		4DC5A4C828866769008129BE /* Catalog-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Catalog-Bridging-Header.h"; sourceTree = "<group>"; };
+		4DC5A4C928866769008129BE /* Catalog-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Catalog-Prefix.pch"; sourceTree = "<group>"; };
+		4DC5A4CB28866790008129BE /* NSRecursiveLockExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRecursiveLockExtensions.swift; sourceTree = "<group>"; };
+		4DC5A4CC28866790008129BE /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
+		4DC5A4CD28866790008129BE /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
+		4DC5A4CE28866790008129BE /* UIBarButtonExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonExtensions.swift; sourceTree = "<group>"; };
+		4DC5A4CF28866790008129BE /* InkAnnotation+Samples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InkAnnotation+Samples.swift"; sourceTree = "<group>"; };
+		4DC5A4D028866790008129BE /* NSUserActivityExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSUserActivityExtensions.swift; sourceTree = "<group>"; };
+		4DC5A4D128866791008129BE /* UIColor+CatalogDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+CatalogDefaults.swift"; sourceTree = "<group>"; };
 		6540D1821D89D22E00B8F94F /* RCTPSPDFKitManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTPSPDFKitManager.h; sourceTree = "<group>"; };
 		6540D1831D89D22E00B8F94F /* RCTPSPDFKitManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTPSPDFKitManager.m; sourceTree = "<group>"; };
 		657277151D8312EA00A5E1A8 /* libRCTPSPDFKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTPSPDFKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +126,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4DC5A49B2886673D008129BE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4DC5A4CA28866772008129BE /* Categories */,
+				4DC5A4C72886675A008129BE /* CatalogSwift.h */,
+				4DC5A4B32886674F008129BE /* AdaptivePDFViewController.swift */,
+				4DC5A4B12886674F008129BE /* Application.swift */,
+				4DC5A49F2886674F008129BE /* AssetLoader.swift */,
+				4DC5A4A42886674F008129BE /* AssetName+ExpressibleByStringLiteral.swift */,
+				4DC5A4B22886674F008129BE /* CatalogCell.swift */,
+				4DC5A4A52886674F008129BE /* CatalogHeaderView.swift */,
+				4DC5A4A02886674F008129BE /* CatalogViewController.swift */,
+				4DC5A4AC2886674F008129BE /* Content.swift */,
+				4DC5A4A62886674F008129BE /* Example.swift */,
+				4DC5A4B02886674F008129BE /* Examples.swift */,
+				4DC5A4AA2886674F008129BE /* FileHelper.swift */,
+				4DC5A4AF2886674F008129BE /* IndustryExample.swift */,
+				4DC5A4A12886674F008129BE /* MoreInfoCoordinator.swift */,
+				4DC5A4AD2886674F008129BE /* PSCAssetLoader.h */,
+				4DC5A49D2886674E008129BE /* PSCAssetLoader.m */,
+				4DC5A49E2886674E008129BE /* PSCExample.h */,
+				4DC5A4A82886674F008129BE /* PSCExample.m */,
+				4DC5A4A22886674F008129BE /* PSCExampleLookup.h */,
+				4DC5A4A72886674F008129BE /* PSCExampleLookup.m */,
+				4DC5A4AB2886674F008129BE /* PSCMacros.h */,
+				4DC5A4A92886674F008129BE /* SectionDescriptor.swift */,
+				4DC5A4A32886674F008129BE /* SidebarControllersContainingViewController.swift */,
+				4DC5A4AE2886674F008129BE /* URLHelper.swift */,
+				4DC5A49C2886674E008129BE /* RCTPSPDFKit-Bridging-Header.h */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		4DC5A4CA28866772008129BE /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				4DC5A4CF28866790008129BE /* InkAnnotation+Samples.swift */,
+				4DC5A4CB28866790008129BE /* NSRecursiveLockExtensions.swift */,
+				4DC5A4D028866790008129BE /* NSUserActivityExtensions.swift */,
+				4DC5A4CE28866790008129BE /* UIBarButtonExtensions.swift */,
+				4DC5A4D128866791008129BE /* UIColor+CatalogDefaults.swift */,
+				4DC5A4CD28866790008129BE /* UIImageExtensions.swift */,
+				4DC5A4CC28866790008129BE /* UIViewControllerExtensions.swift */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		657278041D86AE7300A5E1A8 /* RCTPSPDFKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +211,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				4DC5A4C828866769008129BE /* Catalog-Bridging-Header.h */,
+				4DC5A4C928866769008129BE /* Catalog-Prefix.pch */,
+				4DC5A49B2886673D008129BE /* Helpers */,
 				657278041D86AE7300A5E1A8 /* RCTPSPDFKit */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 			);
@@ -150,6 +260,7 @@
 				TargetAttributes = {
 					657277141D8312EA00A5E1A8 = {
 						CreatedOnToolsVersion = 8.0;
+						LastSwiftMigration = 1340;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -177,16 +288,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DC5A4B42886674F008129BE /* PSCAssetLoader.m in Sources */,
 				657278111D86AEC600A5E1A8 /* RCTConvert+PSPDFDocument.m in Sources */,
+				4DC5A4B62886674F008129BE /* CatalogViewController.swift in Sources */,
+				4DC5A4D428866791008129BE /* UIImageExtensions.swift in Sources */,
 				F8C1A2E5202DCC9700E98192 /* RCTPSPDFKitViewManager.m in Sources */,
+				4DC5A4C22886674F008129BE /* IndustryExample.swift in Sources */,
+				4DC5A4B82886674F008129BE /* SidebarControllersContainingViewController.swift in Sources */,
+				4DC5A4D628866791008129BE /* InkAnnotation+Samples.swift in Sources */,
+				4DC5A4B52886674F008129BE /* AssetLoader.swift in Sources */,
+				4DC5A4B92886674F008129BE /* AssetName+ExpressibleByStringLiteral.swift in Sources */,
+				4DC5A4C02886674F008129BE /* Content.swift in Sources */,
+				4DC5A4C42886674F008129BE /* Application.swift in Sources */,
 				84545BA4210A5CCF00FBB0A7 /* RCTConvert+PSPDFAnnotation.m in Sources */,
+				4DC5A4C32886674F008129BE /* Examples.swift in Sources */,
+				4DC5A4D228866791008129BE /* NSRecursiveLockExtensions.swift in Sources */,
+				4DC5A4BB2886674F008129BE /* Example.swift in Sources */,
 				6540D1841D89D22E00B8F94F /* RCTPSPDFKitManager.m in Sources */,
+				4DC5A4C62886674F008129BE /* AdaptivePDFViewController.swift in Sources */,
+				4DC5A4B72886674F008129BE /* MoreInfoCoordinator.swift in Sources */,
+				4DC5A4D828866791008129BE /* UIColor+CatalogDefaults.swift in Sources */,
+				4DC5A4BA2886674F008129BE /* CatalogHeaderView.swift in Sources */,
 				84694AA822AFC7510077FD01 /* RCTConvert+UIBarButtonItem.m in Sources */,
+				4DC5A4BD2886674F008129BE /* PSCExample.m in Sources */,
 				84B9870023FC208600C6711A /* RCTConvert+PSPDFAnnotationChange.m in Sources */,
+				4DC5A4D328866791008129BE /* UIViewControllerExtensions.swift in Sources */,
+				4DC5A4BF2886674F008129BE /* FileHelper.swift in Sources */,
 				B783BA3421C3F55300FD981A /* RCTConvert+PSPDFAnnotationToolbarConfiguration.m in Sources */,
 				F84F8B192032D54F00153D9E /* RCTPSPDFKitView.m in Sources */,
+				4DC5A4BE2886674F008129BE /* SectionDescriptor.swift in Sources */,
+				4DC5A4C52886674F008129BE /* CatalogCell.swift in Sources */,
 				6572780C1D86AE7300A5E1A8 /* RCTConvert+PSPDFConfiguration.m in Sources */,
+				4DC5A4D728866791008129BE /* NSUserActivityExtensions.swift in Sources */,
+				4DC5A4C12886674F008129BE /* URLHelper.swift in Sources */,
+				4DC5A4BC2886674F008129BE /* PSCExampleLookup.m in Sources */,
 				84BC2EAD229EE9FF00A386C6 /* RCTConvert+PSPDFViewMode.m in Sources */,
+				4DC5A4D528866791008129BE /* UIBarButtonExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,13 +334,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../../ios/Pods/PSPDFKit";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Helpers/RCTPSPDFKit-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -211,14 +353,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../../ios/Pods/PSPDFKit";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Helpers/RCTPSPDFKit-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
