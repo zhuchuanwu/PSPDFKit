@@ -394,13 +394,13 @@ open class CatalogViewController: BaseTableViewController {
     }
 
     func debugClearInstantCache() {
-        UserDefaults.standard.removeObject(forKey: InstantExampleLastViewedDocumentInfoKey)
-        UserDefaults.standard.removeObject(forKey: MultiUserInstantExampleLastViewedDocumentInfoKey)
-        do {
-            try InstantDocumentManager.shared.clearAllLocalStorage()
-        } catch {
-            showAlert(withTitle: "Failed to Clear Instant Cache", message: error.localizedDescription)
-        }
+//        UserDefaults.standard.removeObject(forKey: InstantExampleLastViewedDocumentInfoKey)
+//        UserDefaults.standard.removeObject(forKey: MultiUserInstantExampleLastViewedDocumentInfoKey)
+//        do {
+//            try InstantDocumentManager.shared.clearAllLocalStorage()
+//        } catch {
+//            showAlert(withTitle: "Failed to Clear Instant Cache", message: error.localizedDescription)
+//        }
     }
 }
 

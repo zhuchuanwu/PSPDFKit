@@ -14,10 +14,19 @@
 + (NSArray <NSDictionary *> *)instantJSONFromAnnotations:(NSArray <PSPDFAnnotation *> *) annotations error:(NSError **)error {
   NSMutableArray <NSDictionary *> *annotationsJSON = [NSMutableArray new];
   for (PSPDFAnnotation *annotation in annotations) {
+      NSString * base64String=@"";
+      if ([annotation isKindOfClass:[PSPDFStampAnnotation class]]) {
+          PSPDFStampAnnotation *newStampAnnotation = annotation;
+          NSData *imageData = UIImagePNGRepresentation(newStampAnnotation.image);
+          base64String = [imageData base64EncodedStringWithOptions:0];
+      }
     NSDictionary <NSString *, NSString *> *uuidDict = @{@"uuid" : annotation.uuid};
     NSData *annotationData = [annotation generateInstantJSONWithError:error];
     if (annotationData) {
       NSMutableDictionary *annotationDictionary = [[NSJSONSerialization JSONObjectWithData:annotationData options:kNilOptions error:error] mutableCopy];
+     if ([base64String length]>0) {
+         [annotationDictionary setObject:base64String forKey:@"binary"];
+      }
       [annotationDictionary addEntriesFromDictionary:uuidDict];
       if (annotationDictionary) {
         [annotationsJSON addObject:annotationDictionary];

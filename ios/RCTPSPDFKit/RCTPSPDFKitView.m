@@ -24,20 +24,69 @@
 
 @end
 
+@interface PSCCustomAnnotationToolbar : PSPDFAnnotationToolbar<PSPDFDocumentViewControllerDelegate,UIColorPickerViewControllerDelegate> @end
+
+@implementation PSCCustomAnnotationToolbar
+-(void)event_button_click{
+//    NSArray<PSPDFColorPreset *> *presets = @[[PSPDFColorPreset presetWithColor:UIColor.blackColor],
+//                                             [PSPDFColorPreset presetWithColor:UIColor.redColor],
+//                                             [PSPDFColorPreset presetWithColor:UIColor.greenColor],
+//                                             [PSPDFColorPreset presetWithColor:UIColor.blueColor]];
+//    PSPDFDefaultAnnotationStyleManager *styleManager = (PSPDFDefaultAnnotationStyleManager *)PSPDFKitGlobal.sharedInstance.styleManager;
+//    PSPDFAnnotationStateVariantID key = PSPDFAnnotationStateVariantIDMake(PSPDFAnnotationStringLine, nil);
+//    [styleManager setPresets:presets forKey:key type:PSPDFAnnotationStyleTypeColorPreset];
+    UIColorPickerViewController *picker =[[UIColorPickerViewController alloc] init];
+    picker.delegate=self;
+   // [annotationStateManager.pdfController presentViewController:picker animated:NO completion:nil];
+}
+
+- (instancetype)initWithAnnotationStateManager:(PSPDFAnnotationStateManager *)annotationStateManager{
+    PSPDFToolbarButton *clearAnnotationsButton = [[PSPDFToolbarButton alloc] init];
+    clearAnnotationsButton.accessibilityLabel=@"Clear";
+//    UIImage *image =[UIImage imageNamed:@"icon"];
+//    clearAnnotationsButton.image =[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];;
+    self =[super initWithAnnotationStateManager:annotationStateManager];
+    clearAnnotationsButton.image =[PSPDFKitGlobal imageNamed:@"x"];
+    
+    [clearAnnotationsButton setBackgroundColor:[UIColor colorWithRed:255/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]];
+   
+    [clearAnnotationsButton addTarget:self
+                               action:@selector(event_button_click)
+      forControlEvents:UIControlEventTouchUpInside];
+    self.additionalButtons = @[clearAnnotationsButton];
+   
+    return  self;
+}
+//-(void)annotationStateManager:(PSPDFAnnotationStateManager *)manager didChangeState:(PSPDFAnnotationString)oldState to:(PSPDFAnnotationString)newState variant:(PSPDFAnnotationVariantString)oldVariant to:(PSPDFAnnotationVariantString)newVariant{
+//    manager.drawColor=[UIColor redColor];
+//}
+@end
+
 @implementation RCTPSPDFKitView
+
 
 - (instancetype)initWithFrame:(CGRect)frame {
   if ((self = [super initWithFrame:frame])) {
-    _pdfController = [[RCTPSPDFKitViewController alloc] init];
+      PSPDFConfiguration *configuration = [PSPDFConfiguration configurationWithBuilder:^(PSPDFConfigurationBuilder *builder) {
+          [builder overrideClass:PSPDFAnnotationToolbar.class withClass:PSCCustomAnnotationToolbar.class];
+          
+        
+      }];
+
+      
+    _pdfController = [[RCTPSPDFKitViewController alloc] initWithDocument:nil configuration:configuration];
     _pdfController.delegate = self;
     _pdfController.annotationToolbarController.delegate = self;
     _closeButton = [[UIBarButtonItem alloc] initWithImage:[PSPDFKitGlobal imageNamed:@"x"] style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonPressed:)];
+    
+     
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(annotationChangedNotification:) name:PSPDFAnnotationChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(annotationChangedNotification:) name:PSPDFAnnotationsAddedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(annotationChangedNotification:) name:PSPDFAnnotationsRemovedNotification object:nil];
 
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(spreadIndexDidChange:) name:PSPDFDocumentViewControllerSpreadIndexDidChangeNotification object:nil];
+     
   }
   
   return self;

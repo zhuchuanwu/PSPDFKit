@@ -4,9 +4,9 @@
 //  The PSPDFKit Sample applications are licensed with a modified BSD license.
 //  Please see License for details. This notice may not be removed from this file.
 //
-
+#import "RCTPSPDFKitView.h"
 #import "PSCAssetLoader.h"
 #import "PSCExample.h"
 #import "PSCMacros.h"
 #import "PSCExampleLookup.h"
-#import "PSCSplitViewController.h"
+//#import "PSCSplitViewController.h"
