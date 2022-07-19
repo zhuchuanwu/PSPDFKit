@@ -12,6 +12,10 @@
 #import "RCTConvert+PSPDFAnnotation.h"
 #import "RCTConvert+PSPDFViewMode.h"
 #import "RCTConvert+UIBarButtonItem.h"
+#import "PSPDFKitReactNativeiOS-Swift.h"
+
+
+
 
 #define VALIDATE_DOCUMENT(document, ...) { if (!document.isValid) { NSLog(@"Document is invalid."); if (self.onDocumentLoadFailed) { self.onDocumentLoadFailed(@{@"error": @"Document is invalid."}); } return __VA_ARGS__; }}
 
@@ -41,24 +45,28 @@
 }
 
 - (instancetype)initWithAnnotationStateManager:(PSPDFAnnotationStateManager *)annotationStateManager{
-    PSPDFToolbarButton *clearAnnotationsButton = [[PSPDFToolbarButton alloc] init];
-    clearAnnotationsButton.accessibilityLabel=@"Clear";
-//    UIImage *image =[UIImage imageNamed:@"icon"];
-//    clearAnnotationsButton.image =[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];;
-    self =[super initWithAnnotationStateManager:annotationStateManager];
-    clearAnnotationsButton.image =[PSPDFKitGlobal imageNamed:@"x"];
+//    PSPDFToolbarButton *clearAnnotationsButton = [[PSPDFToolbarButton alloc] init];
+//    clearAnnotationsButton.accessibilityLabel=@"Clear";
+//    self =[super initWithAnnotationStateManager:annotationStateManager];
+//    clearAnnotationsButton.image =[PSPDFKitGlobal imageNamed:@"x"];
+//
+//    [clearAnnotationsButton setBackgroundColor:[UIColor colorWithRed:255/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]];
+//
+//    [clearAnnotationsButton addTarget:self
+//                               action:@selector(event_button_click)
+//      forControlEvents:UIControlEventTouchUpInside];
+//    self.additionalButtons = @[clearAnnotationsButton];
     
-    [clearAnnotationsButton setBackgroundColor:[UIColor colorWithRed:255/255.0 green:0/255.0 blue:0/255.0 alpha:1.0]];
-   
-    [clearAnnotationsButton addTarget:self
-                               action:@selector(event_button_click)
-      forControlEvents:UIControlEventTouchUpInside];
-    self.additionalButtons = @[clearAnnotationsButton];
+    PSPDFAnnotation *newAnnotation= [[PSPDFAnnotation alloc] init];
+    [newAnnotation setVariant:@"continuous"];
+    self=[super initWithAnnotationStateManager:annotationStateManager];
+//    typealias Item = [PSPDFAnnotationToolbarConfiguration.too]
+//    typealias Group = AnnotationToolConfiguration.ToolGroup
    
     return  self;
 }
 //-(void)annotationStateManager:(PSPDFAnnotationStateManager *)manager didChangeState:(PSPDFAnnotationString)oldState to:(PSPDFAnnotationString)newState variant:(PSPDFAnnotationVariantString)oldVariant to:(PSPDFAnnotationVariantString)newVariant{
-//    manager.drawColor=[UIColor redColor];
+//
 //}
 @end
 
@@ -68,7 +76,8 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   if ((self = [super initWithFrame:frame])) {
       PSPDFConfiguration *configuration = [PSPDFConfiguration configurationWithBuilder:^(PSPDFConfigurationBuilder *builder) {
-          [builder overrideClass:PSPDFAnnotationToolbar.class withClass:PSCCustomAnnotationToolbar.class];
+//          [builder overrideClass:PSPDFAnnotationToolbar.class withClass:PSCCustomAnnotationToolbar.class];
+//          [builder overrideClass:PSPDFAnnotationToolbar.class withClass:CustomAnnotationToolbar.self];
           
         
       }];
