@@ -10,28 +10,28 @@ import UIKit
 
 
 
-class CustomButtonAnnotationToolbarExample: Example {
-
-    override init() {
-        super.init()
-        title = "Add a Custom Button to the Annotation Toolbar"
-        contentDescription = "Will add a 'Clear' button to the annotation toolbar that removes all annotations from the visible page."
-        category = .barButtons
-        priority = 210
-    }
-
-    override func invoke(with delegate: ExampleRunnerDelegate) -> UIViewController {
-        let document = AssetLoader.document(for: .annualReport)
-        let controller = PDFViewController(document: document) {
-            $0.overrideClass(AnnotationToolbar.self, with: AnnotationToolbarWithClearButton.self)
-            $0.overrideClass(AnnotationToolbar.self, with: CustomAnnotationToolbar.self)
-            $0.overrideClass(AnnotationToolbar.self, with: AnnotationToolbarWithThreeColors.self)
-            $0.overrideClass(AnnotationStyleViewController.self, with: CustomAnnotationStyleViewController.self)
-            
-        }
-        return controller
-    }
-}
+//class CustomButtonAnnotationToolbarExample: Example {
+//
+//    override init() {
+//        super.init()
+//        title = "Add a Custom Button to the Annotation Toolbar"
+//        contentDescription = "Will add a 'Clear' button to the annotation toolbar that removes all annotations from the visible page."
+//        category = .barButtons
+//        priority = 210
+//    }
+//
+//    override func invoke(with delegate: ExampleRunnerDelegate) -> UIViewController {
+//        let document = AssetLoader.document(for: .annualReport)
+//        let controller = PDFViewController(document: document) {
+//            $0.overrideClass(AnnotationToolbar.self, with: AnnotationToolbarWithClearButton.self)
+//            $0.overrideClass(AnnotationToolbar.self, with: CustomAnnotationToolbar.self)
+//            $0.overrideClass(AnnotationToolbar.self, with: AnnotationToolbarWithThreeColors.self)
+//            $0.overrideClass(AnnotationStyleViewController.self, with: CustomAnnotationStyleViewController.self)
+//            
+//        }
+//        return controller
+//    }
+//}
 
 class AnnotationToolbarWithClearButton: AnnotationToolbar, PDFDocumentViewControllerDelegate {
     var clearAnnotationsButton: ToolbarButton

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D8693BA288A3AAE00374E14 /* CustomButtonAnnotationToolbarExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8693B9288A3AAE00374E14 /* CustomButtonAnnotationToolbarExample.swift */; };
 		6540D1841D89D22E00B8F94F /* RCTPSPDFKitManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6540D1831D89D22E00B8F94F /* RCTPSPDFKitManager.m */; };
 		6572780C1D86AE7300A5E1A8 /* RCTConvert+PSPDFConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 657278071D86AE7300A5E1A8 /* RCTConvert+PSPDFConfiguration.m */; };
 		657278111D86AEC600A5E1A8 /* RCTConvert+PSPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 657278101D86AEC600A5E1A8 /* RCTConvert+PSPDFDocument.m */; };
@@ -32,6 +33,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D8693B8288A3AAD00374E14 /* RCTPSPDFKit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCTPSPDFKit-Bridging-Header.h"; sourceTree = "<group>"; };
+		4D8693B9288A3AAE00374E14 /* CustomButtonAnnotationToolbarExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtonAnnotationToolbarExample.swift; sourceTree = "<group>"; };
 		6540D1821D89D22E00B8F94F /* RCTPSPDFKitManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTPSPDFKitManager.h; sourceTree = "<group>"; };
 		6540D1831D89D22E00B8F94F /* RCTPSPDFKitManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTPSPDFKitManager.m; sourceTree = "<group>"; };
 		657277151D8312EA00A5E1A8 /* libRCTPSPDFKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTPSPDFKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,8 +107,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				4D8693B9288A3AAE00374E14 /* CustomButtonAnnotationToolbarExample.swift */,
 				657278041D86AE7300A5E1A8 /* RCTPSPDFKit */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				4D8693B8288A3AAD00374E14 /* RCTPSPDFKit-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -150,6 +155,7 @@
 				TargetAttributes = {
 					657277141D8312EA00A5E1A8 = {
 						CreatedOnToolsVersion = 8.0;
+						LastSwiftMigration = 1340;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -187,6 +193,7 @@
 				F84F8B192032D54F00153D9E /* RCTPSPDFKitView.m in Sources */,
 				6572780C1D86AE7300A5E1A8 /* RCTConvert+PSPDFConfiguration.m in Sources */,
 				84BC2EAD229EE9FF00A386C6 /* RCTConvert+PSPDFViewMode.m in Sources */,
+				4D8693BA288A3AAE00374E14 /* CustomButtonAnnotationToolbarExample.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,13 +204,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../../ios/Pods/PSPDFKit";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RCTPSPDFKit-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -211,14 +223,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../../ios/Pods/PSPDFKit";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RCTPSPDFKit-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
