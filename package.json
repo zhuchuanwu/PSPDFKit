@@ -1,5 +1,5 @@
 {
-  "name": "react-native-pspdfkit",
+  "name": "react-native-pspdfkit1",
   "version": "2.2.2",
   "description": "React Native PDF Library by PSPDFKit",
   "keywords": [
@@ -7,14 +7,14 @@
     "pspdfkit",
     "pdf"
   ],
-  "homepage": "https://github.com/PSPDFKit/react-native",
+  "homepage": "https://github.com/zhuchuanwu/PSPDFKit",
   "bugs": {
     "email": "support@pspdfkit.com"
   },
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PSPDFKit/react-native.git"
+    "url": "https://github.com/PSPDFKit/PSPDFKit.git"
   },
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
