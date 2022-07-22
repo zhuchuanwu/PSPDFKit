@@ -28,7 +28,7 @@ class CreateAnnotationsFastModeExample: Example {
     }
 }
 
-private class CustomAnnotationToolbar: AnnotationToolbar {
+class CustomAnnotationToolbar: AnnotationToolbar {
     let continuousVariant = Annotation.Variant(rawValue: "continuous")
 
     override init(annotationStateManager: AnnotationStateManager) {
